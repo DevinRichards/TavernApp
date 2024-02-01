@@ -12,9 +12,13 @@ class Server(db.Model):
   profilePictureUrl = db.Column(db.String(255), nullable=False, default="https://fontawesome.com/icons/user?f=classic&s=solid")
   ownerID = db.Column(db.String(255), db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
   name = db.Column(db.String(40), nullable=False)
-  channels = db.Column(db.string(255), nullable=False)
+  channels = db.Column(db.String(255), nullable=False)
   created_at = db.Column(db.DateTime, default=datetime.utcnow)
   updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
+
+  owner = db.relationship('User', backref='owned_servers', foreign_keys='Server.ownerID', lazy=True)
+  channels = db.relationship('Channel', backref='server', lazy=True)
+  server_admins = db.relationship('ServerAdmin', backref='server', foreign_keys='ServerAdmin.serverId', lazy=True)
 
   def to_dict(self):
     return {

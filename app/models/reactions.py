@@ -9,11 +9,15 @@ class Reaction(db.Model):
 
 
   id = db.Column(db.Integer, primary_key=True)
-  emoji = db.Column(db.String(2550), nullable=False)
+  emoji = db.Column(db.String(255), nullable=False)
   messageID = db.Column(db.String(255), db.ForeignKey(add_prefix_for_prod('messages.id')), nullable=False)
   userID = db.Column(db.String(255), db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
   created_at = db.Column(db.DateTime, default=datetime.utcnow)
   updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
+
+  message = db.relationship('Message', backref='reactions', foreign_keys='Reaction.messageID', lazy=True)
+  user = db.relationship('User', backref='reactions', foreign_keys='Reaction.userID', lazy=True)
+
 
   def to_dict(self):
     return {

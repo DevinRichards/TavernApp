@@ -14,13 +14,14 @@ class ServerAdmin(db.Model):
   created_at = db.Column(db.DateTime, default=datetime.utcnow)
   updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
 
+  server = db.relationship('Server', backref='admins', foreign_keys='ServerAdmin.serverID', lazy=True)
+  user = db.relationship('User', backref='admin_servers', foreign_keys='ServerAdmin.userID', lazy=True)
+
   def to_dict(self):
     return {
         'id': self.id,
         'serverID':self.serverID,
         'userID': self.userID,
-        'name':self.name,
-        'channels':self.channels,
         'created_at': self.created_at,
         'updated_at': self.updated_at
     }

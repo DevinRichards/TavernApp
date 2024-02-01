@@ -15,6 +15,11 @@ class Channel(db.Model):
   created_at = db.Column(db.DateTime, default=datetime.utcnow)
   updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
 
+  server = db.relationship('Server', backref='channels', foreign_keys='Channel.serverID', lazy=True)
+  messages = db.relationship('Message', backref='channel', lazy=True)
+  threads = db.relationship('Thread', backref='channel', lazy=True)
+
+
   def to_dict(self):
     return {
         'id': self.id,
