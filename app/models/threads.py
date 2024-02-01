@@ -14,8 +14,8 @@ class Thread(db.Model):
   created_at = db.Column(db.DateTime, default=datetime.utcnow)
   updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
 
-  sender = db.relationship('User', backref='threads', foreign_keys='Thread.senderID', lazy=True)
-  messages = db.relationship('Message', backref='thread', lazy=True)
+  user = db.relationship('User', back_populates='threads', foreign_keys='Thread.senderID', lazy=True)
+  messages = db.relationship('Message', back_populates='thread', lazy=True)
 
 
   def to_dict(self):

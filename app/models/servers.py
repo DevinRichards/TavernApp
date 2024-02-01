@@ -16,9 +16,9 @@ class Server(db.Model):
   created_at = db.Column(db.DateTime, default=datetime.utcnow)
   updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
 
-  owner = db.relationship('User', backref='owned_servers', foreign_keys='Server.ownerID', lazy=True)
-  channels = db.relationship('Channel', backref='server', lazy=True)
-  server_admins = db.relationship('ServerAdmin', backref='server', foreign_keys='ServerAdmin.serverId', lazy=True)
+  owner = db.relationship('User', back_populates='owned_servers', foreign_keys='Server.ownerID', lazy=True)
+  channels = db.relationship('Channel', back_populates='server', lazy=True)
+  server_admins = db.relationship('ServerAdmin', back_populates='server', foreign_keys='ServerAdmin.serverId', lazy=True)
 
   def to_dict(self):
     return {

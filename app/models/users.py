@@ -18,12 +18,12 @@ class User(db.Model, UserMixin):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
 
-    messages = db.relationship('Message', backref='user', lazy=True)
-    reactions = db.relationship('Reaction', backref='user', lazy=True)
-    direct_messages_sent = db.relationship('DirectMessage', foreign_keys='DirectMessage.senderID', backref='sender', lazy=True)
-    direct_messages_received = db.relationship('DirectMessage', foreign_keys='DirectMessage.receiverID', backref='receiver', lazy=True)
-    threads = db.relationship('Thread', backref='user', lazy=True)
-    admin_servers = db.relationship('ServerAdmin', backref='admin', lazy=True)
+    messages = db.relationship('Message', back_populates='sender', lazy=True)
+    reactions = db.relationship('Reaction', back_populates='user', lazy=True)
+    direct_messages_sent = db.relationship('DirectMessage', foreign_keys='DirectMessage.senderID', back_populates='sender', lazy=True)
+    direct_messages_received = db.relationship('DirectMessage', foreign_keys='DirectMessage.receiverID', back_populates='receiver', lazy=True)
+    threads = db.relationship('Thread', back_populates='user', lazy=True)
+    admin_servers = db.relationship('ServerAdmin', back_populates='admin', lazy=True)
 
     @property
     def password(self):

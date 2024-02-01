@@ -15,8 +15,8 @@ class DirectMessage(db.Model):
   created_at = db.Column(db.DateTime, default=datetime.utcnow)
   updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
 
-  sender = db.relationship('User', backref='sent_direct_messages', foreign_keys='DirectMessage.senderID', lazy=True)
-  receiver = db.relationship('User', backref='received_direct_messages', foreign_keys='DirectMessage.receiverID', lazy=True)
+  sender = db.relationship('User', back_populates='sent_direct_messages', foreign_keys='DirectMessage.senderID', lazy=True)
+  receiver = db.relationship('User', back_populates='received_direct_messages', foreign_keys='DirectMessage.receiverID', lazy=True)
 
 
   def to_dict(self):

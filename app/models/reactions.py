@@ -15,8 +15,8 @@ class Reaction(db.Model):
   created_at = db.Column(db.DateTime, default=datetime.utcnow)
   updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
 
-  message = db.relationship('Message', backref='reactions', foreign_keys='Reaction.messageID', lazy=True)
-  user = db.relationship('User', backref='reactions', foreign_keys='Reaction.userID', lazy=True)
+  message = db.relationship('Message', back_populates='reactions', foreign_keys='Reaction.messageID', lazy=True)
+  user = db.relationship('User', back_populates='reactions', foreign_keys='Reaction.userID', lazy=True)
 
 
   def to_dict(self):

@@ -15,8 +15,8 @@ class Message(db.Model):
   created_at = db.Column(db.DateTime, default=datetime.utcnow)
   updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
 
-  channel = db.relationship('Channel', backref='messages', foreign_keys='Message.channelID', lazy=True)
-  sender = db.relationship('User', backref='sent_messages', foreign_keys='Message.senderID', lazy=True)
+  channel = db.relationship('Channel', back_populates='messages', foreign_keys='Message.channelID', lazy=True)
+  sender = db.relationship('User', back_populates='sender', foreign_keys='Message.senderID', lazy=True)
 
   def to_dict(self):
     return {
