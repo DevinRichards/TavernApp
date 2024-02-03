@@ -9,14 +9,14 @@ class Server(db.Model):
 
   id = db.Column(db.Integer, primary_key=True)
   profilePictureUrl = db.Column(db.String(255), nullable=False, default="https://fontawesome.com/icons/user?f=classic&s=solid")
-  ownerId = db.Column(db.String(255), db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
+  ownerId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
   name = db.Column(db.String(40), nullable=False)
   created_at = db.Column(db.DateTime, default=datetime.utcnow)
   updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
 
   owner = db.relationship('User', back_populates='owned_servers', foreign_keys='Server.ownerId', lazy=True)
   channels = db.relationship('Channel', back_populates='server', lazy=True)
-  admins = db.relationship('ServerAdmin', back_populates='server', foreign_keys='ServerAdmin.serverId', lazy=True)
+  admins = db.relationship('Server_Admin', back_populates='server', foreign_keys='Server_Admin.serverId', lazy=True)
   threads = db.relationship('Thread', back_populates='server', lazy=True)  # Added relationship
 
   def to_dict(self):

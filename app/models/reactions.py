@@ -10,8 +10,8 @@ class Reaction(db.Model):
 
   id = db.Column(db.Integer, primary_key=True)
   emoji = db.Column(db.String(255), nullable=False)
-  messageId = db.Column(db.String(255), db.ForeignKey(add_prefix_for_prod('messages.id')), nullable=False)
-  userId = db.Column(db.String(255), db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
+  messageId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('messages.id')), nullable=False)
+  userId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
   created_at = db.Column(db.DateTime, default=datetime.utcnow)
   updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
 

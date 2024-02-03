@@ -10,8 +10,8 @@ class Message(db.Model):
 
   id = db.Column(db.Integer, primary_key=True)
   content = db.Column(db.String(2550), nullable=False)
-  channelId = db.Column(db.String(255), db.ForeignKey(add_prefix_for_prod('channels.id')), nullable=False)
-  senderId = db.Column(db.String(255), db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
+  channelId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('channels.id')), nullable=False)
+  senderId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
   threadId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('threads.id')))
   created_at = db.Column(db.DateTime, default=datetime.utcnow)
   updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)

@@ -11,7 +11,7 @@ class Channel(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String(40), nullable=False)
   description = db.Column(db.String(100))
-  serverId = db.Column(db.String(255), db.ForeignKey(add_prefix_for_prod('servers.id')), nullable=False)
+  serverId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('servers.id')), nullable=False)
   created_at = db.Column(db.DateTime, default=datetime.utcnow)
   updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
 

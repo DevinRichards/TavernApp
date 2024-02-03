@@ -20,10 +20,10 @@ class User(db.Model, UserMixin):
 
     sender = db.relationship('Message', back_populates='sender', lazy=True)
     reactions = db.relationship('Reaction', back_populates='user', lazy=True)
-    sent_direct_messages= db.relationship('DirectMessage', foreign_keys='DirectMessage.senderId', back_populates='sender', lazy=True)
-    received_direct_messages = db.relationship('DirectMessage', foreign_keys='DirectMessage.receiverId', back_populates='receiver', lazy=True)
+    sent_direct_messages= db.relationship('Direct_Message', foreign_keys='Direct_Message.senderId', back_populates='sender', lazy=True)
+    received_direct_messages = db.relationship('Direct_Message', foreign_keys='Direct_Message.receiverId', back_populates='receiver', lazy=True)
     threads = db.relationship('Thread', back_populates='user', lazy=True)
-    admin_servers = db.relationship('ServerAdmin', back_populates='admin', lazy=True)
+    admin_servers = db.relationship('Server_Admin', back_populates='admin', lazy=True)
     owned_servers = db.relationship('Server', back_populates='owner', lazy=True)
 
 
