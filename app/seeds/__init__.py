@@ -24,9 +24,9 @@ def seed():
         # the schema name (see comment in users.py undo_users function).
         # Make sure to add all your other model's undo functions below
         undo_direct_messagess()
-        undo_threads()
         undo_reactions()
         undo_messages()
+        undo_threads()
         undo_channels()
         undo_server_admins()
         undo_servers()
@@ -35,9 +35,9 @@ def seed():
     seed_servers()
     seed_server_admins()
     seed_channels()
+    seed_threads()
     seed_messages()
     seed_reactions()
-    seed_threads()
     seed_direct_messages()
 
     # Add other seed functions here
