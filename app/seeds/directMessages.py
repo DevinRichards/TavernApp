@@ -1,4 +1,4 @@
-from app.models.direct_messagess import db, Direct_Message, environment, SCHEMA
+from app.models.directMessages import db, Direct_Message, environment, SCHEMA
 from datetime import datetime
 from sqlalchemy.sql import text
 

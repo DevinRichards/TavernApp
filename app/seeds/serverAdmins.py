@@ -1,4 +1,4 @@
-from app.models.server_admins import db, Server_Admin, environment, SCHEMA
+from app.models.serverAdmins import db, Server_Admin, environment, SCHEMA
 from sqlalchemy.sql import text
 
 # Adds server admins
