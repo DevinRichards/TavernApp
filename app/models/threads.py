@@ -9,7 +9,7 @@ class Thread(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(255), nullable=False)
-    senderId = db.Column(db.String(255), db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
+    senderId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
     serverId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('servers.id')), nullable=False)
     channelId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('channels.id')), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
@@ -25,7 +25,7 @@ class Thread(db.Model):
             'id': self.id,
             'content': self.content,
             'senderId': self.senderId,
-            'serverId': self.serverId,  
+            'serverId': self.serverId,
             'channelId': self.channelId,
             'created_at': self.created_at,
             'updated_at': self.updated_at
