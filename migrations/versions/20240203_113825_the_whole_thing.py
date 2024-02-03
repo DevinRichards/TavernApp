@@ -1,8 +1,8 @@
-"""Updated with Column fix
+"""the whole thing
 
-Revision ID: c6f671a8abff
+Revision ID: b36b8c2b0a72
 Revises: 
-Create Date: 2024-02-03 11:27:57.016044
+Create Date: 2024-02-03 11:38:25.423307
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'c6f671a8abff'
+revision = 'b36b8c2b0a72'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -44,7 +44,7 @@ def upgrade():
     op.create_table('servers',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('profilePictureUrl', sa.String(length=255), nullable=False),
-    sa.Column('ownerId', sa.String(length=255), nullable=False),
+    sa.Column('ownerId', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=40), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
@@ -55,7 +55,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=40), nullable=False),
     sa.Column('description', sa.String(length=100), nullable=True),
-    sa.Column('serverId', sa.String(length=255), nullable=False),
+    sa.Column('serverId', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['serverId'], ['servers.id'], ),
@@ -63,8 +63,8 @@ def upgrade():
     )
     op.create_table('serverAdmins',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('serverId', sa.String(length=255), nullable=False),
-    sa.Column('userId', sa.String(length=255), nullable=False),
+    sa.Column('serverId', sa.Integer(), nullable=False),
+    sa.Column('userId', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['serverId'], ['servers.id'], ),
@@ -74,7 +74,7 @@ def upgrade():
     op.create_table('threads',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('content', sa.String(length=255), nullable=False),
-    sa.Column('senderId', sa.String(length=255), nullable=False),
+    sa.Column('senderId', sa.Integer(), nullable=False),
     sa.Column('serverId', sa.Integer(), nullable=False),
     sa.Column('channelId', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=True),
@@ -87,8 +87,8 @@ def upgrade():
     op.create_table('messages',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('content', sa.String(length=2550), nullable=False),
-    sa.Column('channelId', sa.String(length=255), nullable=False),
-    sa.Column('senderId', sa.String(length=255), nullable=False),
+    sa.Column('channelId', sa.Integer(), nullable=False),
+    sa.Column('senderId', sa.Integer(), nullable=False),
     sa.Column('threadId', sa.Integer(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
@@ -100,8 +100,8 @@ def upgrade():
     op.create_table('reactions',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('emoji', sa.String(length=255), nullable=False),
-    sa.Column('messageId', sa.String(length=255), nullable=False),
-    sa.Column('userId', sa.String(length=255), nullable=False),
+    sa.Column('messageId', sa.Integer(), nullable=False),
+    sa.Column('userId', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['messageId'], ['messages.id'], ),
