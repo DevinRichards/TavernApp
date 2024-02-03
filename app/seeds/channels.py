@@ -5,31 +5,31 @@ from sqlalchemy.sql import text
 def seed_channels():
     channel1 = Channel(
         name='General',
-        serverID=1,
+        serverId=1,
         description='General chat channel',
     )
 
     channel2 = Channel(
         name='Announcements',
-        serverID=1,
+        serverId=1,
         description='Announcement channel',
     )
 
     channel3 = Channel(
         name='Random',
-        serverID=2,
+        serverId=2,
         description='Random chat channel',
     )
 
     channel4 = Channel(
         name='Music',
-        serverID=3,
+        serverId=3,
         description='Music discussion channel',
     )
 
     channel5 = Channel(
         name='Gaming',
-        serverID=4,
+        serverId=4,
         description='Gaming chat channel',
     )
 

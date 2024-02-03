@@ -5,32 +5,32 @@ def seed_messages():
 
     message1 = Message(
         content='Hello, world!',
-        channelID=1,
-        senderID=1,
+        channelId=1,
+        senderId=1,
     )
 
     message2 = Message(
         content='Welcome to the chat!',
-        channelID=1,
-        senderID=2,
+        channelId=1,
+        senderId=2,
     )
 
     message3 = Message(
         content='Anybody here?',
-        channelID=2,
-        senderID=3,
+        channelId=2,
+        senderId=3,
     )
 
     message4 = Message(
         content='This is a test message',
-        channelID=3,
-        senderID=4,
+        channelId=3,
+        senderId=4,
     )
 
     message5 = Message(
         content='Great discussion!',
-        channelID=4,
-        senderID=5,  
+        channelId=4,
+        senderId=5,
     )
 
     db.session.add(message1)

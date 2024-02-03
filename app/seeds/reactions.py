@@ -7,32 +7,32 @@ def seed_reactions():
 
     reaction1 = Reaction(
         emoji='👍',
-        messageID=1,
-        userID=1,
+        messageId=1,
+        userId=1,
     )
 
     reaction2 = Reaction(
         emoji='❤️',
-        messageID=2,
-        userID=2,
+        messageId=2,
+        userId=2,
     )
 
     reaction3 = Reaction(
         emoji='😄',
-        messageID=3,
-        userID=3,
+        messageId=3,
+        userId=3,
     )
 
     reaction4 = Reaction(
         emoji='👏',
-        messageID=4,
-        userID=4,
+        messageId=4,
+        userId=4,
     )
 
     reaction5 = Reaction(
         emoji='🔥',
-        messageID=5,
-        userID=5,
+        messageId=5,
+        userId=5,
     )
 
     db.session.add(reaction1)

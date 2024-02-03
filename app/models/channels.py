@@ -11,13 +11,13 @@ class Channel(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String(40), nullable=False)
   description = db.Column(db.String(100))
-  serverID = db.Column(db.String(255), db.ForeignKey(add_prefix_for_prod('servers.id')), nullable=False)
+  serverId = db.Column(db.String(255), db.ForeignKey(add_prefix_for_prod('servers.id')), nullable=False)
   created_at = db.Column(db.DateTime, default=datetime.utcnow)
   updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
 
-  server = db.relationship('Server', back_populates='channels', foreign_keys='Channel.serverID', lazy=True)
+  server = db.relationship('Server', back_populates='channels', foreign_keys='Channel.serverId', lazy=True)
   messages = db.relationship('Message', back_populates='channel', lazy=True)
-  threads = db.relationship('Thread', back_populates='channel', lazy=True)
+  threads = db.relationship('Thread', back_populates='channel',foreign_keys='Thread.channelId', lazy=True)
 
 
   def to_dict(self):
@@ -25,7 +25,7 @@ class Channel(db.Model):
         'id': self.id,
         'name':self.name,
         'description': self.description,
-        'serverID':self.serverID,
+        'serverId':self.serverId,
         'created_at': self.created_at,
         'updated_at': self.updated_at
     }

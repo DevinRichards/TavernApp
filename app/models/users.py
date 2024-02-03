@@ -18,12 +18,14 @@ class User(db.Model, UserMixin):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
 
-    messages = db.relationship('Message', back_populates='sender', lazy=True)
+    sender = db.relationship('Message', back_populates='sender', lazy=True)
     reactions = db.relationship('Reaction', back_populates='user', lazy=True)
-    direct_messages_sent = db.relationship('DirectMessage', foreign_keys='DirectMessage.senderID', back_populates='sender', lazy=True)
-    direct_messages_received = db.relationship('DirectMessage', foreign_keys='DirectMessage.receiverID', back_populates='receiver', lazy=True)
+    sent_direct_messages= db.relationship('DirectMessage', foreign_keys='DirectMessage.senderId', back_populates='sender', lazy=True)
+    received_direct_messages = db.relationship('DirectMessage', foreign_keys='DirectMessage.receiverId', back_populates='receiver', lazy=True)
     threads = db.relationship('Thread', back_populates='user', lazy=True)
     admin_servers = db.relationship('ServerAdmin', back_populates='admin', lazy=True)
+    owned_servers = db.relationship('Server', back_populates='owner', lazy=True)
+
 
     @property
     def password(self):

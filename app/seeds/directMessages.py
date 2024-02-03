@@ -5,32 +5,32 @@ from sqlalchemy.sql import text
 def seed_direct_messages():
     direct_message1 = DirectMessage(
         content='Hello, how are you?',
-        senderID=1,
-        receiverID=2,
+        senderId=1,
+        receiverId=2,
     )
 
     direct_message2 = DirectMessage(
         content='Im doing well, thanks!',
-        senderID=2,
-        receiverID=1,
+        senderId=2,
+        receiverId=1,
     )
 
     direct_message3 = DirectMessage(
         content='What are you up to?',
-        senderID=3,
-        receiverID=4,
+        senderId=3,
+        receiverId=4,
     )
 
     direct_message4 = DirectMessage(
         content='Not much, just working on a project.',
-        senderID=4,
-        receiverID=3,
+        senderId=4,
+        receiverId=3,
     )
 
     direct_message5 = DirectMessage(
         content='Lets catch up soon!',
-        senderID=5,
-        receiverID=1,
+        senderId=5,
+        receiverId=1,
     )
 
     db.session.add(direct_message1)

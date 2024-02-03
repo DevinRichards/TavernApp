@@ -1,50 +1,103 @@
-from app.models import db, User,  environment, SCHEMA
+from app.models import db, environment, SCHEMA
 from app.models.servers import Server
+from app.models.channels import Channel
 from sqlalchemy.sql import text
-
 
 # Adds servers
 def seed_servers():
     server1 = Server(
         profilePictureUrl='https://fontawesome.com/icons/server?f=classic&s=solid',
-        ownerID=1,
+        ownerId=1,
         name='Server 1',
-        channels='General, Announcements',
+    )
+
+    # Create channels and associate them with the server
+    general_channel1 = Channel(
+        name='General',
+        server=server1,
+    )
+
+    announcements_channel1 = Channel(
+        name='Announcements',
+        server=server1,
     )
 
     server2 = Server(
         profilePictureUrl='https://fontawesome.com/icons/server?f=classic&s=solid',
-        ownerID=2,
+        ownerId=2,
         name='Server 2',
-        channels='General, Random',
+    )
+
+    # Create channels and associate them with the server
+    general_channel2 = Channel(
+        name='General',
+        server=server2,
+    )
+
+    random_channel2 = Channel(
+        name='Random',
+        server=server2,
     )
 
     server3 = Server(
         profilePictureUrl='https://fontawesome.com/icons/server?f=classic&s=solid',
-        ownerID=3,
+        ownerId=3,
         name='Server 3',
-        channels='General, Music',
+    )
+
+    # Create channels and associate them with the server
+    general_channel3 = Channel(
+        name='General',
+        server=server3,
+    )
+
+    music_channel3 = Channel(
+        name='Music',
+        server=server3,
     )
 
     server4 = Server(
         profilePictureUrl='https://fontawesome.com/icons/server?f=classic&s=solid',
-        ownerID=4,
+        ownerId=4,
         name='Server 4',
-        channels='General, Gaming',
+    )
+
+    # Create channels and associate them with the server
+    general_channel4 = Channel(
+        name='General',
+        server=server4,
+    )
+
+    gaming_channel4 = Channel(
+        name='Gaming',
+        server=server4,
     )
 
     server5 = Server(
         profilePictureUrl='https://fontawesome.com/icons/server?f=classic&s=solid',
-        ownerID=5,
+        ownerId=5,
         name='Server 5',
-        channels='General, Tech',
     )
 
-    db.session.add(server1)
-    db.session.add(server2)
-    db.session.add(server3)
-    db.session.add(server4)
-    db.session.add(server5)
+    # Create channels and associate them with the server
+    general_channel5 = Channel(
+        name='General',
+        server=server5,
+    )
+
+    tech_channel5 = Channel(
+        name='Tech',
+        server=server5,
+    )
+
+    db.session.add_all([
+        server1, server2, server3, server4, server5,
+        general_channel1, announcements_channel1,
+        general_channel2, random_channel2,
+        general_channel3, music_channel3,
+        general_channel4, gaming_channel4,
+        general_channel5, tech_channel5,
+    ])
 
     db.session.commit()
 

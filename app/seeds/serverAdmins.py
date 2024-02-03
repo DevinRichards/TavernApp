@@ -4,28 +4,28 @@ from sqlalchemy.sql import text
 # Adds server admins
 def seed_server_admins():
     server_admin1 = ServerAdmin(
-        serverID=1,
-        userID=1,
+        serverId=1,
+        userId=1,
     )
 
     server_admin2 = ServerAdmin(
-        serverID=2,
-        userID=2,
+        serverId=2,
+        userId=2,
     )
 
     server_admin3 = ServerAdmin(
-        serverID=3,
-        userID=3,
+        serverId=3,
+        userId=3,
     )
 
     server_admin4 = ServerAdmin(
-        serverID=4,
-        userID=4,
+        serverId=4,
+        userId=4,
     )
 
     server_admin5 = ServerAdmin(
-        serverID=5,
-        userID=5,
+        serverId=5,
+        userId=5,
     )
 
     db.session.add(server_admin1)

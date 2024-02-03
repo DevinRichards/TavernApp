@@ -5,35 +5,40 @@ from sqlalchemy.sql import text
 def seed_threads():
     thread1 = Thread(
         content='Thread content 1',
-        senderID=1,
+        senderId=1,
+        serverId=1,  # Specify the serverId for the first thread
+        channelId=1,  # Specify the channelId for the first thread
     )
 
     thread2 = Thread(
         content='Thread content 2',
-        senderID=2,
+        senderId=2,
+        serverId=2,  # Specify the serverId for the second thread
+        channelId=3,  # Specify the channelId for the second thread
     )
 
     thread3 = Thread(
         content='Thread content 3',
-        senderID=3,
+        senderId=3,
+        serverId=3,  # Specify the serverId for the third thread
+        channelId=4,  # Specify the channelId for the third thread
     )
 
     thread4 = Thread(
         content='Thread content 4',
-        senderID=4,
+        senderId=4,
+        serverId=4,  # Specify the serverId for the fourth thread
+        channelId=5,  # Specify the channelId for the fourth thread
     )
 
     thread5 = Thread(
         content='Thread content 5',
-        senderID=5,
+        senderId=5,
+        serverId=5,  # Specify the serverId for the fifth thread
+        channelId=6,  # Specify the channelId for the fifth thread
     )
 
-    db.session.add(thread1)
-    db.session.add(thread2)
-    db.session.add(thread3)
-    db.session.add(thread4)
-    db.session.add(thread5)
-
+    db.session.add_all([thread1, thread2, thread3, thread4, thread5])
     db.session.commit()
 
 # Uses a raw SQL query to TRUNCATE or DELETE the users table. SQLAlchemy doesn't
