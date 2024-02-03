@@ -1,8 +1,8 @@
-"""the whole thing
+"""Updated with Column fix
 
-Revision ID: 263ecf48b8c4
+Revision ID: c6f671a8abff
 Revises: 
-Create Date: 2024-02-03 11:09:35.480928
+Create Date: 2024-02-03 11:27:57.016044
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '263ecf48b8c4'
+revision = 'c6f671a8abff'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -33,8 +33,8 @@ def upgrade():
     op.create_table('directMessages',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('content', sa.String(length=255), nullable=False),
-    sa.Column('senderId', sa.String(length=255), nullable=False),
-    sa.Column('receiverId', sa.String(length=255), nullable=False),
+    sa.Column('senderId', sa.Integer(), nullable=False),
+    sa.Column('receiverId', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['receiverId'], ['users.id'], ),
