@@ -1,8 +1,8 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 
-class ServerAdmin(db.Model):
-  __tablename__ = 'serverAdmins'
+class Server_Admin(db.Model):
+  __tablename__ = 'server_admins'
 
   if environment == "production":
     __table_args__ = {'schema': SCHEMA}
@@ -14,8 +14,8 @@ class ServerAdmin(db.Model):
   created_at = db.Column(db.DateTime, default=datetime.utcnow)
   updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
 
-  server = db.relationship('Server', back_populates='admins', foreign_keys='ServerAdmin.serverId', lazy=True)
-  admin = db.relationship('User', back_populates='admin_servers', foreign_keys='ServerAdmin.userId', lazy=True)
+  server = db.relationship('Server', back_populates='admins', foreign_keys='Server_Admin.serverId', lazy=True)
+  admin = db.relationship('User', back_populates='admin_servers', foreign_keys='Server_Admin.userId', lazy=True)
 
   def to_dict(self):
     return {

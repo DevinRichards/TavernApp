@@ -16,7 +16,7 @@ class Server(db.Model):
 
   owner = db.relationship('User', back_populates='owned_servers', foreign_keys='Server.ownerId', lazy=True)
   channels = db.relationship('Channel', back_populates='server', lazy=True)
-  admins = db.relationship('ServerAdmin', back_populates='server', foreign_keys='ServerAdmin.serverId', lazy=True)
+  admins = db.relationship('Server_Admin', back_populates='server', foreign_keys='Server_Admin.serverId', lazy=True)
   threads = db.relationship('Thread', back_populates='server', lazy=True)  # Added relationship
 
   def to_dict(self):

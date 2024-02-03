@@ -1,8 +1,8 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 
-class DirectMessage(db.Model):
-  __tablename__ = 'directMessages'
+class Direct_Message(db.Model):
+  __tablename__ = 'direct_messages'
 
   if environment == "production":
     __table_args__ = {'schema': SCHEMA}
@@ -15,8 +15,8 @@ class DirectMessage(db.Model):
   created_at = db.Column(db.DateTime, default=datetime.utcnow)
   updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
 
-  sender = db.relationship('User', back_populates='sent_direct_messages', foreign_keys='DirectMessage.senderId', lazy=True)
-  receiver = db.relationship('User', back_populates='received_direct_messages', foreign_keys='DirectMessage.receiverId', lazy=True)
+  sender = db.relationship('User', back_populates='sent_direct_messages', foreign_keys='Direct_Message.senderId', lazy=True)
+  receiver = db.relationship('User', back_populates='received_direct_messages', foreign_keys='Direct_Message.receiverId', lazy=True)
 
 
   def to_dict(self):

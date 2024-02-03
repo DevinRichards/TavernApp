@@ -1,33 +1,33 @@
-from app.models.directMessages import db, DirectMessage, environment, SCHEMA
+from app.models.direct_messagess import db, Direct_Message, environment, SCHEMA
 from datetime import datetime
 from sqlalchemy.sql import text
 
 def seed_direct_messages():
-    direct_message1 = DirectMessage(
+    direct_message1 = Direct_Message(
         content='Hello, how are you?',
         senderId=1,
         receiverId=2,
     )
 
-    direct_message2 = DirectMessage(
+    direct_message2 = Direct_Message(
         content='Im doing well, thanks!',
         senderId=2,
         receiverId=1,
     )
 
-    direct_message3 = DirectMessage(
+    direct_message3 = Direct_Message(
         content='What are you up to?',
         senderId=3,
         receiverId=4,
     )
 
-    direct_message4 = DirectMessage(
+    direct_message4 = Direct_Message(
         content='Not much, just working on a project.',
         senderId=4,
         receiverId=3,
     )
 
-    direct_message5 = DirectMessage(
+    direct_message5 = Direct_Message(
         content='Lets catch up soon!',
         senderId=5,
         receiverId=1,
@@ -47,10 +47,10 @@ def seed_direct_messages():
 # incrementing primary key, CASCADE deletes any dependent entities.  With
 # sqlite3 in development you need to instead use DELETE to remove all data and
 # it will reset the primary keys for you as well.
-def undo_directMessages():
+def undo_direct_messagess():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.directMessages RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.direct_messagess RESTART IDENTITY CASCADE;")
     else:
-        db.session.execute(text("DELETE FROM directMessages"))
+        db.session.execute(text("DELETE FROM direct_messagess"))
 
     db.session.commit()

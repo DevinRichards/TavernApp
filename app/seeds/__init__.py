@@ -1,12 +1,12 @@
 from flask.cli import AppGroup
 from .users import seed_users, undo_users
 from .servers import seed_servers, undo_servers
-from .serverAdmins import seed_server_admins, undo_serverAdmins
+from .server_admins import seed_server_admins, undo_server_admins
 from .channels import seed_channels, undo_channels
 from .messages import seed_messages, undo_messages
 from .reactions import seed_reactions, undo_reactions
 from .threads import seed_threads, undo_threads
-from .directMessages import seed_direct_messages, undo_directMessages
+from .direct_messagess import seed_direct_messages, undo_direct_messagess
 
 from app.models.db import db, environment, SCHEMA
 
@@ -23,12 +23,12 @@ def seed():
         # command, which will  truncate all tables prefixed with
         # the schema name (see comment in users.py undo_users function).
         # Make sure to add all your other model's undo functions below
-        undo_directMessages()
+        undo_direct_messagess()
         undo_threads()
         undo_reactions()
         undo_messages()
         undo_channels()
-        undo_serverAdmins()
+        undo_server_admins()
         undo_servers()
         undo_users()
     seed_users()
@@ -46,12 +46,12 @@ def seed():
 # Creates the `flask seed undo` command
 @seed_commands.command('undo')
 def undo():
-    undo_directMessages()
+    undo_direct_messagess()
     undo_threads()
     undo_reactions()
     undo_messages()
     undo_channels()
-    undo_serverAdmins()
+    undo_server_admins()
     undo_servers()
     undo_users()
     # Add other undo functions here
