@@ -1,7 +1,7 @@
 """the whole thing
 
 Revision ID: b36b8c2b0a72
-Revises: 
+Revises:
 Create Date: 2024-02-03 11:38:25.423307
 
 """
@@ -37,8 +37,8 @@ def upgrade():
     sa.Column('receiverId', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
-    sa.ForeignKeyConstraint(['receiverId'], ['users.id'], ),
-    sa.ForeignKeyConstraint(['senderId'], ['users.id'], ),
+    sa.ForeignKeyConstraint(['receiverId'], ['users.id'], name='fk_directMessages_receiverId_users'),
+    sa.ForeignKeyConstraint(['senderId'], ['users.id'], name='fk_directMessages_senderId_users'),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('servers',
