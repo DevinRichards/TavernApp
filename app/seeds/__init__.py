@@ -1,12 +1,12 @@
 from flask.cli import AppGroup
 from .users import seed_users, undo_users
 from .servers import seed_servers, undo_servers
-from .server_admins import seed_server_admins, undo_server_admins
+from .serverAdmins import seed_server_admins, undo_server_admins
 from .channels import seed_channels, undo_channels
 from .messages import seed_messages, undo_messages
 from .reactions import seed_reactions, undo_reactions
 from .threads import seed_threads, undo_threads
-from .direct_messagess import seed_direct_messages, undo_direct_messagess
+from .directMessages import seed_direct_messages, undo_direct_messagess
 
 from app.models.db import db, environment, SCHEMA
 
