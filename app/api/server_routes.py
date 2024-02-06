@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import db, Server, Channel
 from app.forms.server_form import ServerForm
+from app.forms.channel_form import ChannelForm
 
 server_routes = Blueprint('servers', __name__)
 
@@ -109,3 +110,32 @@ def get_channel_in_server(serverId, channelId):
 
     else:
       return jsonify({'channel': [channel.to_dict()]})
+
+
+@server_routes.route('/<int:serverId>/channels/create', methods = ['POST'])
+@login_required
+def create_channel(serverId):
+  form = ChannelForm()
+  form['csrf_token'].data = request.cookies['csrf_token']
+
+  server = Server.query.get(serverId)
+
+  if not server:
+    return {'errors': f"Server {serverId} does not exist."}, 400
+
+  if not form.validate_on_submit():
+    print("there are some errors in the form--------------------")
+    print(form.errors)
+    return jsonify({"error": "Form validation failed", "details": form.errors}), 400
+
+  else:
+    new_channel = Channel(
+      name = form.data['name'],
+      description = form.data['description'],
+      serverId = server.id,
+    )
+
+    db.session.add(new_channel)
+    db.session.commit()
+
+    return jsonify(new_channel.to_dict()), 201
