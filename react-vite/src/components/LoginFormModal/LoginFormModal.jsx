@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { thunkLogin } from "../../redux/session";
+import { thunkLogin, thunkLogout } from "../../redux/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./LoginForm.css";
+import { Link } from 'react-router-dom';
 
 function LoginFormModal() {
   const dispatch = useDispatch();
@@ -26,6 +27,17 @@ function LoginFormModal() {
     } else {
       closeModal();
     }
+  };
+
+  const handleDemoLogin = async (e) => {
+    e.preventDefault();
+    await dispatch(thunkLogout());
+    closeModal()
+    const email = "demo@aa.io";
+    const password ="password";
+    setEmail(email);
+    setPassword(password);
+    return await dispatch(thunkLogin(email, password));
   };
 
   return (
@@ -53,6 +65,9 @@ function LoginFormModal() {
         </label>
         {errors.password && <p>{errors.password}</p>}
         <button type="submit">Log In</button>
+        <button id="logindemobutton" onClick={handleDemoLogin}>
+            <Link className="logindemobutton" to="/" >Log in as Demo User</Link>
+        </button>
       </form>
     </>
   );
