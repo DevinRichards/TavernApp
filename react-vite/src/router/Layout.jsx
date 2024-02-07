@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux";
 import { ModalProvider, Modal } from "../context/Modal";
 import { thunkAuthenticate } from "../redux/session";
 import Navigation from "../components/Navigation/Navigation";
+import ServerIndex from "../components/Servers/ServerIndex";
+import ChannelIndex from "../components/Channel/ChannelIndex";
 
 export default function Layout() {
   const dispatch = useDispatch();
@@ -19,6 +21,8 @@ export default function Layout() {
         {isLoaded && <Outlet />}
         <Modal />
       </ModalProvider>
+      <ServerIndex/>
+      <ChannelIndex/>
     </>
   );
 }
