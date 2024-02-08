@@ -25,6 +25,9 @@ const ServerIndex = ({ num }) => {
             <ServerIndexItem server={server} key={index} />
           ))}
         </ul>
+        <ul>
+          create new server
+        </ul>
       </div>
     </div>
   );
