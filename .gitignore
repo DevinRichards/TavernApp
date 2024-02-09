@@ -1,0 +1,4 @@
+.env
+dev.db
+_pycache_/
+*.pyc
