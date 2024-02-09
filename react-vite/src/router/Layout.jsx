@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+<<<<<<< HEAD
 import { Outlet } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { ModalProvider, Modal } from "../context/Modal";
@@ -8,14 +9,42 @@ import Navigation from "../components/Navigation/Navigation";
 export default function Layout() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+=======
+import { Outlet, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { ModalProvider, Modal } from "../context/Modal";
+import { thunkAuthenticate } from "../redux/session";
+import LoginPage from "../components/LoginPage";
+import LoginFormModal from "../components/LoginFormModal";
+import ServerIndex from "../components/Servers/ServerIndex";
+
+export default function Layout() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [isLoaded, setIsLoaded] = useState(false);
+
+>>>>>>> master
   useEffect(() => {
     dispatch(thunkAuthenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
+<<<<<<< HEAD
   return (
     <>
       <ModalProvider>
         <Navigation />
+=======
+  // useEffect(() => {
+  //   // Redirect to the login page once the authentication check is complete
+  //   if (isLoaded) {
+  //     navigate("/login");
+  //   }
+  // }, [isLoaded, navigate]);
+
+  return (
+    <>
+      <ModalProvider>
+>>>>>>> master
         {isLoaded && <Outlet />}
         <Modal />
       </ModalProvider>

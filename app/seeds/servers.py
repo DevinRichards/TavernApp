@@ -6,7 +6,12 @@ from sqlalchemy.sql import text
 # Adds servers
 def seed_servers():
     server1 = Server(
+<<<<<<< HEAD
         profilePictureUrl='https://fontawesome.com/icons/server?f=classic&s=solid',
+=======
+        profilePictureUrl='https://preview.redd.it/szmxuwhpuqq31.png?width=960&crop=smart&auto=webp&s=465988b76a19c7a03d5269622df1f2ef61ad4020',
+
+>>>>>>> master
         ownerId=1,
         name='Server 1',
     )
@@ -23,7 +28,11 @@ def seed_servers():
     )
 
     server2 = Server(
+<<<<<<< HEAD
         profilePictureUrl='https://fontawesome.com/icons/server?f=classic&s=solid',
+=======
+        profilePictureUrl='https://i.pinimg.com/736x/23/12/a7/2312a7868013e4a1bfc95d2b05f65dbc.jpg',
+>>>>>>> master
         ownerId=2,
         name='Server 2',
     )
@@ -40,7 +49,11 @@ def seed_servers():
     )
 
     server3 = Server(
+<<<<<<< HEAD
         profilePictureUrl='https://fontawesome.com/icons/server?f=classic&s=solid',
+=======
+        profilePictureUrl='https://images2.alphacoders.com/711/711450.jpg',
+>>>>>>> master
         ownerId=3,
         name='Server 3',
     )
@@ -57,7 +70,11 @@ def seed_servers():
     )
 
     server4 = Server(
+<<<<<<< HEAD
         profilePictureUrl='https://fontawesome.com/icons/server?f=classic&s=solid',
+=======
+        profilePictureUrl='https://i.redd.it/eid2hsejfjn71.jpg',
+>>>>>>> master
         ownerId=4,
         name='Server 4',
     )
@@ -74,7 +91,11 @@ def seed_servers():
     )
 
     server5 = Server(
+<<<<<<< HEAD
         profilePictureUrl='https://fontawesome.com/icons/server?f=classic&s=solid',
+=======
+        profilePictureUrl='https://www.pockettactics.com/wp-content/sites/pockettactics/2022/02/Kingdom-hearts-III-wallpaper.jpg',
+>>>>>>> master
         ownerId=5,
         name='Server 5',
     )
