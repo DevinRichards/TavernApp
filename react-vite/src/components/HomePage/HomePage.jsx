@@ -6,6 +6,8 @@ import { setChannels, thunkFetchChannels } from '../../redux/channel';
 import ServerIndex from '../Servers/ServerIndexNavbar';
 import ChannelIndex from "../Channel/ChannelIndex"
 import { thunkLogout } from "../../redux/session";
+import { Outlet } from 'react-router-dom';
+import ServerDetail from '../Servers/ServerDetail/ServerDetail';
 
 const HomePage = () => {
   const [selectedServer, setSelectedServer] = useState(null);
@@ -44,19 +46,18 @@ const HomePage = () => {
   };
 
   return (
-    <div className="homeWrapper">
-      {/* Left-hand side */}
-      <div className="leftSide">
-        {isLoading ? (
-          <>Loading...</>
-        ) : (
-          <ServerIndex servers={servers} onSelect={handleServerSelect} />
-        )}
+    <div className="flex h-screen">
+      {/* Sidebar for servers */}
+      <div className="w-16 md:w-16 bg-gray-800 overflow-y-auto">
+        {isLoading ? <p>Loading...</p> : <ServerIndex servers={servers} onSelect={handleServerSelect} />}
       </div>
-      <div>
-        <ChannelIndex channels = {channels} selectedServer={selectedServer}/>
+
+      {/* Main content area */}
+      <div className="flex-grow bg-gray-100">
+        <ServerDetail/>
+
       </div>
-      <button onClick={logout}>LogOut</button>
+      <button className="p-2 bg-red-500 text-white absolute bottom-0" onClick={logout}>Log Out</button>
     </div>
   );
 };

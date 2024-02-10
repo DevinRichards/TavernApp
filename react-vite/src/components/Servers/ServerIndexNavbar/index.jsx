@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import ServerIndexItem from '../ServerIndexItem/index';
-import ServerCreateModal from '../ServerCreateModal';
-import OpenModalMenuItem from '../../Navigation/OpenModalMenuItem';
+import AddServerButton from '../AddServerButton/AddServerButton';
+
 
 const ServerIndex = ({ servers, num }) => {
   const allServers = useSelector(state => state.server?.servers) || {};
@@ -11,7 +11,7 @@ const ServerIndex = ({ servers, num }) => {
   const ulRef = useRef(null);
 
   useEffect(() => {
-      setIsLoading(false); ;
+    setIsLoading(false);;
   }, []);
 
   useEffect(() => {
@@ -36,18 +36,14 @@ const ServerIndex = ({ servers, num }) => {
     <div className='serverIndexWrapper'>
       {num !== 4 && <div className='serverIndexItem-1'></div>}
       <div className='serverIndexItem-2'>
-        {num !== 4 && <h2>All Servers:</h2>}
+        {num !== 4}
         <ul className='landingServerIndex' ref={ulRef}>
           {num !== 4 && Object.values(allServers).map((server, index) => (
             <ServerIndexItem server={server} key={index} />
           ))}
-        </ul>
-        <ul>
-          <OpenModalMenuItem
-            itemText="+"
-            onItemClick={closeMenu}
-            modalComponent={<ServerCreateModal />}
-          />
+          <li>
+            <AddServerButton />
+          </li>
         </ul>
       </div>
     </div>

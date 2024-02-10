@@ -86,14 +86,16 @@ def delete_server(serverId):
 @server_routes.route('/<int:serverId>/channels')
 @login_required
 def get_channels_by_server(serverId):
-  server = Server.query.get(serverId)
+    server = Server.query.get(serverId)
 
-  if not server:
-    return {'errors': f"Server {serverId} does not exist."}, 400
+    if not server:
+        return {'errors': f"Server {serverId} does not exist."}, 400
 
-  else:
-    channels = Channel.query.all()
-    return jsonify({'channels': [channels.to_dict() for channel in channels]})
+    else:
+        channels = Channel.query.filter_by(serverId=serverId).all()  
+        channels_list = [channel.to_dict() for channel in channels]
+        return jsonify({'channels': channels_list})
+
 
 @server_routes.route('/<int:serverId>/<int:channelId>')
 @login_required

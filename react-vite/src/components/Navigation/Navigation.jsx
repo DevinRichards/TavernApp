@@ -49,7 +49,6 @@ const Navigation = () => {
 
       <div className="serverIndexWrapper">
         <div className="serverIndexItem-2">
-          <h2>All Servers:</h2>
           <ul className="landingServerIndex" ref={ulRef}>
             {Object.values(allServers).map((server, index) => (
               <ServerIndexItem server={server} key={index} />

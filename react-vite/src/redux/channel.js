@@ -26,6 +26,10 @@ export const thunkFetchChannels = (serverId) => async (dispatch) => {
       }
 
       dispatch(setChannels(data.channels));
+    } else {
+      console.error("Error response:", response);
+      const errorMessage = await response.text(); // Get the error message
+      console.error("Error message:", errorMessage);
     }
   } catch (error) {
     console.error("Error fetching channels:", error);

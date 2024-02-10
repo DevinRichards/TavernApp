@@ -28,6 +28,24 @@ export const thunkFetchServers = () => async (dispatch) => {
   }
 };
 
+export const thunkFetchServerById = (serverId) => async (dispatch) => {
+  try {
+    const response = await fetch(`/api/servers/${serverId}`);
+    if (response.ok) {
+      const data = await response.json();
+      dispatch(setCurrentServer(data));
+    } else if (response.status < 500) {
+      const errorMessages = await response.json();
+      throw new Error(JSON.stringify({ errors: errorMessages }));
+    } else {
+      throw new Error("Something went wrong. Please try again");
+    }
+  } catch (error) {
+    return JSON.parse(error.message);
+  }
+};
+
+
 export const thunkCreateServer = (serverData) => async (dispatch) => {
   try {
     const response = await fetch("/api/servers/create", {
