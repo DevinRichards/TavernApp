@@ -1,19 +1,18 @@
-import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { thunkFetchServers } from '../../../redux/server';
+import React, { useState, useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import ServerIndexItem from '../ServerIndexItem/index';
 import ServerCreateModal from '../ServerCreateModal';
 import OpenModalMenuItem from '../../Navigation/OpenModalMenuItem';
 
-const ServerIndex = ({ num }) => {
-  const dispatch = useDispatch();
-  const servers = useSelector(state => state.server?.servers) || {};
+const ServerIndex = ({ servers, num }) => {
+  const allServers = useSelector(state => state.server?.servers) || {};
   const [isLoading, setIsLoading] = useState(true);
   const [showMenu, setShowMenu] = useState(false);
+  const ulRef = useRef(null);
 
   useEffect(() => {
-    dispatch(thunkFetchServers()).then(() => setIsLoading(false));
-  }, [dispatch]);
+      setIsLoading(false); ;
+  }, []);
 
   useEffect(() => {
     if (!showMenu) return;
@@ -31,16 +30,15 @@ const ServerIndex = ({ num }) => {
 
   const closeMenu = () => setShowMenu(false);
 
-  if (isLoading) return (<>Loading...</>);
+  if (isLoading) return <p>Loading...</p>;
 
   return (
-    <div className='serverIndexWrapper '>
-      {num !== 4 && <div className='serverIndexItem-1'>
-      </div>}
+    <div className='serverIndexWrapper'>
+      {num !== 4 && <div className='serverIndexItem-1'></div>}
       <div className='serverIndexItem-2'>
-        {num !== 4 && <h2 >{" "} All Servers:</h2>}
-        <ul className='landingServerIndex'>
-          {num !== 4 && Object.values(servers).map((server, index) => (
+        {num !== 4 && <h2>All Servers:</h2>}
+        <ul className='landingServerIndex' ref={ulRef}>
+          {num !== 4 && Object.values(allServers).map((server, index) => (
             <ServerIndexItem server={server} key={index} />
           ))}
         </ul>
@@ -48,7 +46,7 @@ const ServerIndex = ({ num }) => {
           <OpenModalMenuItem
             itemText="+"
             onItemClick={closeMenu}
-            modalComponent={<ServerCreateModal/>}
+            modalComponent={<ServerCreateModal />}
           />
         </ul>
       </div>

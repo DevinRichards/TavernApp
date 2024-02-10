@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const ServerIndexItem = ({ server }) => {
-  console.log("Server in ServerIndexItem:", server);
   const { id, name, profilePictureUrl } = server;
 
   const containerStyle = {
@@ -26,4 +25,3 @@ const ServerIndexItem = ({ server }) => {
 };
 
 export default ServerIndexItem;
-

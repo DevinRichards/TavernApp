@@ -25,6 +25,7 @@ class Server(db.Model):
         'profilePictureUrl': self.profilePictureUrl,
         'ownerId': self.ownerId,
         'name': self.name,
+        # 'channels':self.channels,
         'created_at': self.created_at,
         'updated_at': self.updated_at
     }

@@ -17,16 +17,21 @@ export const removeChannel = () => ({
 });
 
 export const thunkFetchChannels = (serverId) => async (dispatch) => {
-  const response = await fetch(`/api/servers/${serverId}/channels`);
-  if (response.ok) {
-    const data = await response.json();
-    if (data.errors) {
-      return;
-    }
+  try {
+    const response = await fetch(`/api/servers/${serverId}/channels`);
+    if (response.ok) {
+      const data = await response.json();
+      if (data.errors) {
+        return;
+      }
 
-    dispatch(setChannels(data.channels));
+      dispatch(setChannels(data.channels));
+    }
+  } catch (error) {
+    console.error("Error fetching channels:", error);
   }
 };
+
 
 export const thunkCreateChannel = (serverId, channelData) => async (dispatch) => {
   const response = await fetch(`/api/servers/${serverId}/channels/create`, {
