@@ -9,7 +9,7 @@ const ServerIndexItem = ({ server }) => {
   };
 
   return (
-    <div className='serverTile group relative overflow-hidden' style={containerStyle}>
+    <div className='serverTile group relative overflow-hidden w-full' style={containerStyle}>
       <Link id="serverLinkWithText" to={`/servers/${server.id}`} key={`${id}`}>
         <div id="serverGrid1" className="flex items-center">
           <div id="serverItem1" className="relative">

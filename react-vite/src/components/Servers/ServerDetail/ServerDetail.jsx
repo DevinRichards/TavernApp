@@ -29,6 +29,9 @@ const ServerDetail = () => {
 
   return (
     <div className='serverComponent'>
+      <div>
+      <ServerIndex/>
+      </div>
       <div className='serverHeader' onClick={toggleDropdown}>
         <h1>{server.name}</h1>
         <div>▼</div>

@@ -48,16 +48,14 @@ const HomePage = () => {
   return (
     <div className="flex h-screen">
       {/* Sidebar for servers */}
-      <div className="w-16 md:w-16 bg-gray-800 overflow-y-auto">
+      {/* <div className="w-16 md:w-16 bg-gray-800 overflow-y-auto">
         {isLoading ? <p>Loading...</p> : <ServerIndex servers={servers} onSelect={handleServerSelect} />}
-      </div>
+      </div> */}
 
       {/* Main content area */}
       <div className="flex-grow bg-gray-100">
         <ServerDetail/>
-
       </div>
-      <button className="p-2 bg-red-500 text-white absolute bottom-0" onClick={logout}>Log Out</button>
     </div>
   );
 };

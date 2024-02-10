@@ -22,12 +22,8 @@ export const router = createBrowserRouter([
         element: <SignupPage/>,
       },
       {
-        path: "/",
-        element: <SignupPage/>,
-      },
-      {
         path: "servers/:serverId",
-        element: <ServerDetail />
+        element: <ServerDetail />,
       }
     ],
   },
