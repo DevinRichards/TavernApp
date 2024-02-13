@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { thunkFetchChannels } from '../../../redux/channel';
-// import ServerDropdownMenu from './ServerDropdownMenu'; // This should be your Dropdown component for server options
 import ChannelIndex from '../../Channel/ChannelIndex';
 import { thunkFetchServerById } from '../../../redux/server';
 import ServerIndex from '../ServerIndexNavbar';
@@ -33,11 +32,8 @@ const ServerDetail = () => {
       <ServerIndex/>
       </div>
       <div className='serverHeader' onClick={toggleDropdown}>
-        <h1>{server.name}</h1>
-        <div>▼</div>
+        <h1 className='text-white'style={{ backgroundColor: 'rgb(43,45,49)' }}>{server.name}</h1>
       </div>
-
-      {/* {showDropdown && <ServerDropdownMenu serverId={serverId} />} */}
 
       <ChannelIndex selectedServer={server} />
     </div>
