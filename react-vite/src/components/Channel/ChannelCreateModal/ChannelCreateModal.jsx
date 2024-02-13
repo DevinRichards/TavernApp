@@ -8,13 +8,14 @@ function ChannelCreateModal() {
   const sessionUser = useSelector((state) => state.session.user);
   const server = useSelector(state => state.server?.currentServer) || {};
   const { closeModal } = useModal();
-  const [channelName, setchannelName] = useState("");
+  const [channelName, setChannelName] = useState("");
   const [description, setDescription] = useState("");
   const [errors, setErrors] = useState({});
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    console.log("This is Server", server)
     const channelData = {
       description: description,
       serverId: server.id,

@@ -34,7 +34,7 @@ export const thunkFetchChannels = (serverId) => async (dispatch) => {
   }
 };
 
-export const thunkCreateChannel = (serverId, channelData) => async (dispatch) => {
+export const thunkCreateChannel = (channelData) => async (dispatch) => {
   try {
     const response = await fetch(`/api/servers/${serverId}/channels/create`, {
       method: "POST",

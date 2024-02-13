@@ -1,5 +1,4 @@
 import React, {useState, useRef} from 'react';
-import { useModal } from '../../../context/Modal';
 import ChannelCreateModal from '../ChannelCreateModal/ChannelCreateModal';
 import OpenModalMenuItem from '../../Navigation/OpenModalMenuItem';
 
@@ -15,7 +14,7 @@ const AddChannelButton = () => {
   };
 
   const containerStyle = {
-    backgroundColor: 'rgb(30, 31, 34)',
+    backgroundColor: 'rgb(43,45,49)',
   };
 
   return (

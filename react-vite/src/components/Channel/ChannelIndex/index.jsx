@@ -22,9 +22,9 @@ const ChannelIndex = ({ num, selectedServer }) => {
       {num !== 4 && <div className='channelIndexItem-1'></div>}
       <div className='channelIndexItem-2 px-3 py-2'>
         {num !== 4 && (
-          <div className="flex items-center">
+          <div className="flex items-center list-none">
             <h2 className='text-xs font-bold uppercase text-gray-400 mr-2'>{selectedServer ? `Channels for ${selectedServer.name}` : 'Please select a server'}</h2>
-            <AddChannelButton /> {/* Adding the AddChannelButton component */}
+            <AddChannelButton/>
           </div>
         )}
         <ul className='landingChannelIndex'>
