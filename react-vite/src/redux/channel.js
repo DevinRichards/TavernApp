@@ -2,6 +2,7 @@ export const SET_CHANNELS = 'channels/setChannels';
 export const SET_CURRENT_CHANNEL = 'channels/setCurrentChannel';
 export const REMOVE_CHANNEL = 'channels/removeChannel';
 
+// Action creators
 export const setChannels = (channels) => ({
   type: SET_CHANNELS,
   payload: channels
@@ -16,84 +17,72 @@ export const removeChannel = () => ({
   type: REMOVE_CHANNEL
 });
 
+// Thunks
 export const thunkFetchChannels = (serverId) => async (dispatch) => {
   try {
     const response = await fetch(`/api/servers/${serverId}/channels`);
-    if (response.ok) {
-      const data = await response.json();
-      if (data.errors) {
-        return;
-      }
-
-      dispatch(setChannels(data.channels));
-    } else {
-      console.error("Error response:", response);
-      const errorMessage = await response.text(); // Get the error message
-      console.error("Error message:", errorMessage);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch channels. Status: ${response.status}`);
     }
+    const data = await response.json();
+    if (data.errors) {
+      return;
+    }
+    dispatch(setChannels(data.channels));
   } catch (error) {
-    console.error("Error fetching channels:", error);
+    return error;
   }
 };
 
-
 export const thunkCreateChannel = (serverId, channelData) => async (dispatch) => {
-  const response = await fetch(`/api/servers/${serverId}/channels/create`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(channelData)
-  });
-
-  if(response.ok) {
+  try {
+    const response = await fetch(`/api/servers/${serverId}/channels/create`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(channelData)
+    });
+    if (!response.ok) {
+      throw new Error(`Failed to create channel. Status: ${response.status}`);
+    }
     const data = await response.json();
     dispatch(setCurrentChannel(data));
-  } else if (response.status < 500) {
-    const errorMessages = await response.json();
-    return errorMessages;
-  } else {
-    return { channel: "Something went wrong. Please try again" };
+  } catch (error) {
+    console.error("Error creating channel:", error);
   }
 };
 
 export const thunkUpdateChannel = (channelId, channelData) => async (dispatch) => {
-  const response = await fetch(`/api/channels/${channelId}/update`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(channelData)
-  });
-
-  if(response.ok) {
+  try {
+    const response = await fetch(`/api/channels/${channelId}/update`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(channelData)
+    });
+    if (!response.ok) {
+      throw new Error(`Failed to update channel. Status: ${response.status}`);
+    }
     const data = await response.json();
     dispatch(setCurrentChannel(data));
-  } else if (response.status === 401) {
-    const errorMessages = await response.json();
-    return errorMessages;
-  } else if (response.status < 500) {
-    const errorMessages = await response.json();
-    return errorMessages;
-  } else {
-    return { channel: "Something went wrong. Please try again" };
+  } catch (error) {
+    console.error("Error updating channel:", error);
   }
 };
 
 export const thunkDeleteChannel = (channelId) => async (dispatch) => {
-  const response = await fetch(`/api/channels/${channelId}/delete`, {
-    method: "DELETE"
-  });
-
-  if(response.ok) {
+  try {
+    const response = await fetch(`/api/channels/${channelId}/delete`, {
+      method: "DELETE"
+    });
+    if (!response.ok) {
+      throw new Error(`Failed to delete channel. Status: ${response.status}`);
+    }
     dispatch(removeChannel());
-  } else if (response.status === 401) {
-    const errorMessages = await response.json();
-    return errorMessages;
-  } else if (response.status < 500) {
-    const errorMessages = await response.json();
-    return errorMessages;
-  } else {
-    return { channel: "Something went wrong. Please try again" };
+  } catch (error) {
+    console.error("Error deleting channel:", error);
   }
 };
 
+// Reducer
 const initialState = { channels: [], currentChannel: null };
 
 function channelsReducer(state = initialState, action) {

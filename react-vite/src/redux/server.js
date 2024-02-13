@@ -41,7 +41,7 @@ export const thunkFetchServerById = (serverId) => async (dispatch) => {
       throw new Error("Something went wrong. Please try again");
     }
   } catch (error) {
-    return JSON.parse(error.message);
+    return error;
   }
 };
 

@@ -7,17 +7,17 @@ import { thunkLogout } from '../../../redux/session';
 
 const ServerIndex = ({ servers, num }) => {
   const allServers = useSelector(state => state.server?.servers) || {};
+  const sessionUser = useSelector((state) => state.session.user);
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedServer, setSelectedServer] = useState(null)
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef(null);
   const navigate = useNavigate();
-  const dispatch = useDispatch(); // Initialize useDispatch
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setIsLoading(false);
-    setSelectedServer(Object.values(allServers)[0]?.id); // Select the first server
   }, [allServers]);
+
 
   useEffect(() => {
     if (!showMenu) return;
@@ -43,24 +43,25 @@ const ServerIndex = ({ servers, num }) => {
 
   if (isLoading) return <p>Loading...</p>;
 
-  return (
-    <div className='serverIndexWrapper'>
-      <div className='serverIndexItem-2'>
-        <ul className='landingServerIndex flex flex-row' ref={ulRef}>
-          {num !== 4 && Object.values(allServers).map((server, index) => (
-            <ServerIndexItem server={server} key={index} />
-          ))}
-          <li>
-            <AddServerButton />
-          </li>
-          <li>
-            <button className="p- bg-red-500 text-white" onClick={logout}>Log Out</button>
-          </li>
-        </ul>
+  if (sessionUser) {
+    return (
+      <div className='serverIndexWrapper'>
+        <div className='serverIndexItem-2'>
+          <ul className='landingServerIndex flex flex-row' ref={ulRef}>
+            {num !== 4 && Object.values(allServers).map((server, index) => (
+              <ServerIndexItem server={server} key={index} />
+            ))}
+            <li>
+              <AddServerButton />
+            </li>
+            <li>
+              <button className="p- bg-red-500 text-white" onClick={logout}>Log Out</button>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  };
+}
 
 export default ServerIndex;
-

@@ -19,16 +19,18 @@ const HomePage = () => {
 
   useEffect(() => {
     dispatch(thunkFetchServers())
+      // After fetching servers
       .then(servers => {
         setServers(servers);
         setIsLoading(false);
       })
+
       .then(
         dispatch(thunkFetchChannels())
-        .then(channels =>{
-          setChannels(channels);
-          setIsLoading(false)
-        }))
+          .then(channels => {
+            setChannels(channels);
+            setIsLoading(false)
+          }))
       .catch(error => {
         console.error("Error fetching servers:", error);
         setIsLoading(false);
@@ -47,14 +49,8 @@ const HomePage = () => {
 
   return (
     <div className="flex h-screen">
-      {/* Sidebar for servers */}
-      {/* <div className="w-16 md:w-16 bg-gray-800 overflow-y-auto">
-        {isLoading ? <p>Loading...</p> : <ServerIndex servers={servers} onSelect={handleServerSelect} />}
-      </div> */}
-
-      {/* Main content area */}
       <div className="flex-grow bg-gray-100">
-        <ServerDetail/>
+        <ServerDetail />
       </div>
     </div>
   );

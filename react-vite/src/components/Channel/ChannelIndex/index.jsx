@@ -8,8 +8,6 @@ const ChannelIndex = ({ num, selectedServer }) => {
   const allChannels = useSelector(state => state.channel?.channels) || {};
   const [isLoading, setIsLoading] = useState(true);
 
-  console.log("This is selectedServer:", selectedServer)
-
   useEffect(() => {
     if (selectedServer) {
       dispatch(thunkFetchChannels(selectedServer.id)).then(() => setIsLoading(false));
@@ -22,7 +20,7 @@ const ChannelIndex = ({ num, selectedServer }) => {
     <div className='text-white h-screen' style={{ backgroundColor: 'rgb(43,45,49)' }}>
       {num !== 4 && <div className='channelIndexItem-1'></div>}
       <div className='channelIndexItem-2 px-3 py-2'>
-        {num !== 4 && <h2 className='text-xs font-bold uppercase text-gray-400'>{selectedServer ? `Channels for ${selectedServer.name}` : 'All Channels'}</h2>}
+        {num !== 4 && <h2 className='text-xs font-bold uppercase text-gray-400'>{selectedServer ? `Channels for ${selectedServer.name}` : 'Please select a server'}</h2>}
         <ul className='landingChannelIndex'>
           {num !== 4 && Object.values(allChannels).map((channel, index) => (
             (!selectedServer || channel.serverId === selectedServer.id) && (

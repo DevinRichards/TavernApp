@@ -28,7 +28,7 @@ export default function Layout() {
   return (
     <>
       <ModalProvider>
-        {/* <ServerIndex/> */}
+        <ServerIndex/>
         {isLoaded && <Outlet />}
         <Modal />
       </ModalProvider>
