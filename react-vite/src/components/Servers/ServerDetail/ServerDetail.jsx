@@ -37,6 +37,7 @@ const ServerDetail = () => {
       </div>
 
       <ChannelIndex selectedServer={server} />
+
     </div>
   );
 };
