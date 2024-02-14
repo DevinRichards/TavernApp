@@ -1,6 +1,6 @@
 import React, {useState, useRef} from 'react';
 import OpenModalMenuItem from '../../Navigation/OpenModalMenuItem';
-import ChannelCreateModal from '../ChannelCreateModal/ChannelCreateModal';
+import ChannelSettingModal from '../ChannelSettingModal/ChannelSettingModal';
 
 
 const ChannelSettingButton = () => {
@@ -25,7 +25,7 @@ const ChannelSettingButton = () => {
           className="text-green-500 text-2xl"
           itemText="▾"
           onItemClick={closeMenu}
-          modalComponent={<ChannelCreateModal/>}
+          modalComponent={<ChannelSettingModal/>}
         />
       </button>
     </div>

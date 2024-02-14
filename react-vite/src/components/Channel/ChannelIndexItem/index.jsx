@@ -6,14 +6,18 @@ const ChannelIndexItem = ({ channel }) => {
   console.log("Channel in ChannelIndexItem:", channel);
   const { id, name, description } = channel;
 
+  const handleClick = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div className='channelTile'>
       <Link id="channelLinkWithText" to={`/channels/${channel.id}`} key={`${id}`}>
-        <div className="flex items-center"> 
+        <div className="flex items-center">
           <div>
             <h2>{name}</h2>
           </div>
-          <div className="ml-2">
+          <div className="ml-2" onClick={handleClick}>
             <ChannelSettingButton />
           </div>
         </div>

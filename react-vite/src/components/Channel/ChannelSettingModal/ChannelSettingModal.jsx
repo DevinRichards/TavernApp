@@ -6,8 +6,8 @@ import { useModal } from "../../../context/Modal";
 function ChannelSettingModal({ channel }) {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
-  const [channelName, setChannelName] = useState(channel.name);
-  const [description, setDescription] = useState(channel.description);
+  const [channelName, setChannelName] = useState(channel?.name);
+  const [description, setDescription] = useState(channel?.description);
   const [errors, setErrors] = useState({});
 
   const handleUpdateChannel = async (e) => {
