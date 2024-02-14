@@ -38,40 +38,40 @@ function ChannelCreateModal() {
   };
 
   return (
-    <div>
-      <h1>Create Channel</h1>
+    <div className="max-w-md mx-auto mt-8 bg-gray-800 p-8 rounded-lg">
+      <h1 className="text-2xl font-bold mb-4 text-white">Create Channel</h1>
 
-      {errors.channel && <p>{errors.channel}</p>}
+      {errors.channel && <p className="text-red-500">{errors.channel}</p>}
 
       <form onSubmit={handleSubmit}>
 
-        <div>
-          <label>
-            Channel Name
-            <input
-              type="text"
-              value={channelName}
-              onChange={(e) => setChannelName(e.target.value)}
-              required
-            />
-          </label>
-          {errors.name && <p>{errors.name}</p>}
+        <div className="mb-4">
+          <label className="block text-white">Channel Name</label>
+          <input
+            type="text"
+            value={channelName}
+            onChange={(e) => setChannelName(e.target.value)}
+            className="form-input mt-1 block w-full text-white bg-gray-700"
+            required
+          />
+          {errors.name && <p className="text-red-500">{errors.name}</p>}
         </div>
 
-        <div>
-          <label>
-            Add A Channel Description
-            <input
-              type="text"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              required
-            />
-          </label>
-          {errors.description && <p>{errors.description}</p>}
+        <div className="mb-4">
+          <label className="block text-white">Add A Channel Description</label>
+          <input
+            type="text"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="form-input mt-1 block w-full text-white bg-gray-700"
+            required
+          />
+          {errors.description && <p className="text-red-500">{errors.description}</p>}
         </div>
 
-        <button type="submit">Create Channel</button>
+        <button type="submit" className="bg-blue-500 text-white p-2 rounded-md w-full">
+          Create Channel
+        </button>
       </form>
     </div>
   );
