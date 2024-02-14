@@ -1,17 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { thunkLogin, thunkLogout } from "../../redux/session";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate, Link } from "react-router-dom";
+import { thunkFetchServers } from "../../redux/server";
 
 function LoginFormPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const sessionUser = useSelector((state) => state.session.user);
+  const allServers = useSelector(state => state.server?.servers)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
 
-  if (sessionUser) return <Navigate to="/" replace={true} />;
+  if (sessionUser){
+    if (allServers && allServers.length > 0) {
+      const firstServerId = allServers[0].id;
+      navigate(`/servers/${firstServerId}`);
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,8 +32,6 @@ function LoginFormPage() {
 
     if (serverResponse) {
       setErrors(serverResponse);
-    } else {
-      navigate("/");
     }
   };
 
