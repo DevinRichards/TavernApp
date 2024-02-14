@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ModalProvider, Modal } from "../context/Modal";
 import { thunkAuthenticate } from "../redux/session";
 import Navigation from "../components/Navigation"
@@ -13,17 +13,21 @@ export default function Layout() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isLoaded, setIsLoaded] = useState(false);
+  const isAuthenticated = useSelector(state => state.session?.user);
 
   useEffect(() => {
     dispatch(thunkAuthenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   // Redirect to the login page once the authentication check is complete
-  //   if (isLoaded) {
-  //     navigate("/login");
-  //   }
-  // }, [isLoaded, navigate]);
+  useEffect(() => {
+    if (isLoaded && !isAuthenticated) {
+      navigate("/login");
+    }
+  }, [isLoaded, isAuthenticated, navigate]);
+
+  if (!isLoaded) {
+    return null;
+  }
 
   return (
     <>
