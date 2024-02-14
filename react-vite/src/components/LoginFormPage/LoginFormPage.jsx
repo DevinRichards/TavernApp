@@ -47,28 +47,28 @@ function LoginFormPage() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-8">
-      <h1 className="text-2xl font-bold mb-4">Log In</h1>
-      {errors.length > 0 && errors.map((message) => <p key={message}>{message}</p>)}
+    <div>
+      <h1 className="text-2xl font-bold mb-4 text-white">Log In</h1>
+      {errors.length > 0 && errors.map((message, index) => <p key={index} className="text-red-500">{message}</p>)}
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label className="block text-gray-700">Email</label>
+          <label className="block text-white">Email</label>
           <input
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="form-input mt-1 block w-full"
+            className="form-input mt-1 block w-full text-white bg-gray-700"
             required
           />
           {errors.email && <p className="text-red-500">{errors.email}</p>}
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700">Password</label>
+          <label className="block text-white">Password</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="form-input mt-1 block w-full"
+            className="form-input mt-1 block w-full text-white bg-gray-700"
             required
           />
           {errors.password && <p className="text-red-500">{errors.password}</p>}
@@ -88,7 +88,7 @@ function LoginFormPage() {
           </button>
         </div>
         <div className="text-center">
-          <p>
+          <p className="text-white">
             Need an Account?{" "}
             <Link to="/register" className="text-blue-500">
               Register
