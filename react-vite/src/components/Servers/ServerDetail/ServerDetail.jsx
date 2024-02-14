@@ -5,6 +5,7 @@ import { thunkFetchChannels } from '../../../redux/channel';
 import ChannelIndex from '../../Channel/ChannelIndex';
 import { thunkFetchServerById, thunkFetchServers } from '../../../redux/server';
 import ServerIndex from '../ServerIndexNavbar';
+import ServerSettingButton from '../ServerSettingButton/ServerSettingButton';
 
 const ServerDetail = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -17,8 +18,8 @@ const ServerDetail = () => {
 
   useEffect(() => {
     dispatch(thunkFetchServerById(serverId))
-    .then(dispatch(thunkFetchServers()),
-    setIsLoading(false))
+      .then(dispatch(thunkFetchServers()),
+        setIsLoading(false))
   }, [dispatch, serverId]);
 
   const toggleDropdown = () => {
@@ -33,7 +34,12 @@ const ServerDetail = () => {
   return (
     <div className='serverComponent'>
       <div className='serverHeader' onClick={toggleDropdown}>
-        <h1 className='text-white'style={{ backgroundColor: 'rgb(43,45,49)' }}>{server.name}</h1>
+        <div>
+          <h1 className='text-white' style={{ backgroundColor: 'rgb(43,45,49)' }}>{server.name}</h1>
+        </div>
+        <div className="ml-2" >
+          <ServerSettingButton />
+        </div>
       </div>
 
       <ChannelIndex selectedServer={server} />
