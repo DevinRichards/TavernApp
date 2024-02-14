@@ -1,5 +1,6 @@
-import './ChannelIndexItem.css';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import ChannelSettingButton from '../ChannelSettingButton/ChannelSettingButton';
 
 const ChannelIndexItem = ({ channel }) => {
   console.log("Channel in ChannelIndexItem:", channel);
@@ -8,16 +9,15 @@ const ChannelIndexItem = ({ channel }) => {
   return (
     <div className='channelTile'>
       <Link id="channelLinkWithText" to={`/channels/${channel.id}`} key={`${id}`}>
-        <div id="channelGrid1">
-          <div id="channelItem1">
+        <div className="flex items-center"> 
+          <div>
+            <h2>{name}</h2>
           </div>
-          <div id="channelItem2">
-            {name}
-          </div>
-          <div id="channelItem3">
-            {description}
+          <div className="ml-2">
+            <ChannelSettingButton />
           </div>
         </div>
+        <div>{description}</div>
       </Link>
     </div>
   );
