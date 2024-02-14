@@ -14,6 +14,7 @@ function LoginFormPage() {
   const [errors, setErrors] = useState({});
 
   if (sessionUser){
+    dispatch(thunkFetchServers)
     if (allServers && allServers.length > 0) {
       const firstServerId = allServers[0].id;
       navigate(`/servers/${firstServerId}`);
