@@ -1,6 +1,6 @@
 import React, {useState, useRef} from 'react';
 import { useModal } from '../../../context/Modal';
-import ServerCreateModal from '../ServerCreateModal';
+import ServerCreateModal from "../ServerCreateModal"
 import OpenModalMenuItem from '../../Navigation/OpenModalMenuItem';
 
 

@@ -12,6 +12,7 @@ export const setCurrentServer = (server) => ({
   payload: server
 });
 
+
 export const removeServer = () => ({
   type: REMOVE_SERVER
 });
@@ -34,6 +35,8 @@ export const thunkFetchServerById = (serverId) => async (dispatch) => {
     if (response.ok) {
       const data = await response.json();
       dispatch(setCurrentServer(data));
+
+      dispatch(thunkFetchServers());
     } else if (response.status < 500) {
       const errorMessages = await response.json();
       throw new Error(JSON.stringify({ errors: errorMessages }));

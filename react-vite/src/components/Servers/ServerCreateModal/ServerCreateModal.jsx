@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkCreateServer } from "../../../redux/server";
+import { thunkCreateServer, thunkFetchServers } from "../../../redux/server";
 import { useModal } from "../../../context/Modal";
 
 function ServerCreateModal() {
@@ -24,6 +24,8 @@ function ServerCreateModal() {
       // Reset errors before making the request
       setErrors({});
       await dispatch(thunkCreateServer(serverData));
+      // Fetch servers after successful creation to update the list
+      dispatch(thunkFetchServers());
       // Optionally, close the modal after successful server creation
       closeModal();
     } catch (error) {

@@ -3,10 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ServerIndexItem from '../ServerIndexItem/index';
 import AddServerButton from '../AddServerButton/AddServerButton';
-import { thunkLogout } from '../../../redux/session';
+import { thunkLogout} from '../../../redux/session';
+import { thunkFetchServers } from '../../../redux/server';
 
-const ServerIndex = ({ servers, num }) => {
-  const allServers = useSelector(state => state.server?.servers) || {};
+const ServerIndex = ({ num }) => {
+  const allServers = useSelector(state => state.server.servers) || [];
   const sessionUser = useSelector((state) => state.session.user);
   const [isLoading, setIsLoading] = useState(true);
   const [showMenu, setShowMenu] = useState(false);
@@ -17,7 +18,6 @@ const ServerIndex = ({ servers, num }) => {
   useEffect(() => {
     setIsLoading(false);
   }, [allServers]);
-
 
   useEffect(() => {
     if (!showMenu) return;
@@ -41,6 +41,10 @@ const ServerIndex = ({ servers, num }) => {
     navigate("/login");
   };
 
+  useEffect(() => {
+    dispatch(thunkFetchServers());
+  }, [dispatch]);
+
   if (isLoading) return <p>Loading...</p>;
 
   if (sessionUser) {
@@ -48,7 +52,7 @@ const ServerIndex = ({ servers, num }) => {
       <div className='serverIndexWrapper'>
         <div className='serverIndexItem-2'>
           <ul className='landingServerIndex flex flex-row' ref={ulRef}>
-            {num !== 4 && Object.values(allServers).map((server, index) => (
+            {num !== 4 && allServers.map((server, index) => (
               <ServerIndexItem server={server} key={index} />
             ))}
             <li>
