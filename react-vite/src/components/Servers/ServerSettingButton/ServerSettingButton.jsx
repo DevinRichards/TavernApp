@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { thunkFetchServerById } from '../../../redux/server';
-
 import OpenModalMenuItem from '../../Navigation/OpenModalMenuItem';
 import ServerSettingModal from '../ServerSettingModal/ServerSettingModal';
 
