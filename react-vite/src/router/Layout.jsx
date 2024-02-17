@@ -3,16 +3,6 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ModalProvider, Modal } from "../context/Modal";
 import { thunkAuthenticate } from "../redux/session";
-import Navigation from "../components/Navigation/Navigation";
-
-export default function Layout() {
-  const dispatch = useDispatch();
-  const [isLoaded, setIsLoaded] = useState(false);
-=======
-import { Outlet, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { ModalProvider, Modal } from "../context/Modal";
-import { thunkAuthenticate } from "../redux/session";
 import Navigation from "../components/Navigation"
 import LoginPage from "../components/LoginPage";
 import LoginFormModal from "../components/LoginFormModal";
@@ -24,8 +14,7 @@ export default function Layout() {
   const navigate = useNavigate();
   const [isLoaded, setIsLoaded] = useState(false);
   const isAuthenticated = useSelector(state => state.session?.user);
-
->>>>>>> master
+  
   useEffect(() => {
     dispatch(thunkAuthenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);

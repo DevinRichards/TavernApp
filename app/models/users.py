@@ -36,11 +36,7 @@ class User(db.Model, UserMixin):
         self.hashed_password = generate_password_hash(password)
 
     def check_password(self, password):
-<<<<<<< HEAD
-        return check_password_hash(self.password, password)
-=======
         return check_password_hash(self.hashed_password, password)
->>>>>>> master
 
     def to_dict(self):
         return {

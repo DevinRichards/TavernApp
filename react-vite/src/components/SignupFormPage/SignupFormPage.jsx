@@ -105,7 +105,6 @@ function SignupFormPage() {
         </div>
       </form>
     </div>
->>>>>>> master
   );
 }
 

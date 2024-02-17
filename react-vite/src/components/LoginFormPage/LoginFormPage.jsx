@@ -7,7 +7,6 @@ import { thunkFetchServers } from "../../redux/server";
 function LoginFormPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
->>>>>>> master
   const sessionUser = useSelector((state) => state.session.user);
   const allServers = useSelector(state => state.server?.servers)
   const [email, setEmail] = useState("");
@@ -100,7 +99,6 @@ function LoginFormPage() {
         </div>
       </form>
     </div>
->>>>>>> master
   );
 }
 
