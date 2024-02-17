@@ -8,6 +8,7 @@ function ChannelSettingModal(props) {
   const { closeModal } = useModal();
   const [channelName, setChannelName] = useState(props.channel?.name);
   const [description, setDescription] = useState(props.channel?.description);
+  const server = useSelector(state => state.server?.currentServer)
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
@@ -20,14 +21,17 @@ function ChannelSettingModal(props) {
     e.preventDefault();
 
     const updatedChannelData = {
-      id: props.channel.id,
-      name: channelName,
-      description: description,
+      channelId: props.channel.id,
+      channelData:{
+        name: channelName,
+        description: description,
+      }
     };
 
     try {
       setErrors({});
       await dispatch(thunkUpdateChannel(updatedChannelData));
+      await dispatch(thunkFetchChannels(server.id));
       closeModal();
     } catch (error) {
       console.error("Error in handleUpdateChannel:", error);
@@ -40,7 +44,7 @@ function ChannelSettingModal(props) {
   const handleDeleteChannel = async () => {
     try {
       await dispatch(thunkDeleteChannel(props.channel.id));
-      await dispatch(thunkFetchChannels());
+      await dispatch(thunkFetchChannels(server.id));
       closeModal();
     } catch (error) {
       console.error("Error in handleDeleteChannel:", error);

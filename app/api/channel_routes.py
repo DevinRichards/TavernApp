@@ -9,7 +9,8 @@ channel_routes = Blueprint('channels', __name__)
 @channel_routes.route('/<int:channelId>/update', methods = ['PUT'])
 @login_required
 def update_channel(channelId):
-  form = ChannelForm(request.form)
+  form = ChannelForm()
+  form['csrf_token'].data = request.cookies['csrf_token']
 
   channel = Channel.query.get(channelId)
 

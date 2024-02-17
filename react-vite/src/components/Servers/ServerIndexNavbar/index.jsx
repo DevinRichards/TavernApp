@@ -14,6 +14,7 @@ const ServerIndex = ({ num }) => {
   const ulRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  
 
   useEffect(() => {
     setIsLoading(false);
@@ -33,7 +34,10 @@ const ServerIndex = ({ num }) => {
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
-  const closeMenu = () => setShowMenu(false);
+  useEffect(() => {
+    dispatch(thunkFetchServers());
+  }, [dispatch]);
+
 
   const logout = async (e) => {
     e.preventDefault();
@@ -41,9 +45,6 @@ const ServerIndex = ({ num }) => {
     navigate("/login");
   };
 
-  useEffect(() => {
-    dispatch(thunkFetchServers());
-  }, [dispatch]);
 
   if (isLoading) return <p>Loading...</p>;
 

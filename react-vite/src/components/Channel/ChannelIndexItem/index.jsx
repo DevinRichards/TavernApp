@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import ChannelSettingButton from '../ChannelSettingButton/ChannelSettingButton';
+import { thunkFetchChannels } from '../../../redux/channel';
 
 const ChannelIndexItem = ( props ) => {
   console.log("This is props in Channel Index Item", props)
@@ -9,6 +10,7 @@ const ChannelIndexItem = ( props ) => {
   const handleClick = (e) => {
     e.preventDefault();
   };
+
 
   return (
     <div className='channelTile'>

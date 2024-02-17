@@ -44,7 +44,7 @@ export const thunkFetchChannelById = (serverId, channelId) => async (dispatch) =
     if (data.errors) {
       return;
     }
-    dispatch(setCurrentChannel(data.channel[0])); 
+    dispatch(setCurrentChannel(data.channel[0]));
   } catch (error) {
     console.error("Error fetching channel:", error);
   }
@@ -72,8 +72,11 @@ export const thunkCreateChannel = (channelData) => async (dispatch) => {
   }
 };
 
-export const thunkUpdateChannel = (channelId, channelData) => async (dispatch) => {
-
+export const thunkUpdateChannel = (channelUpdateData) => async (dispatch) => {
+  console.log("This is channelUpdateData", channelUpdateData)
+  const { channelId, channelData } = channelUpdateData;
+  console.log("This is channelID", channelId)
+  console.log("This is channelData", channelData)
   try {
     const response = await fetch(`/api/channels/${channelId}/update`, {
       method: "PUT",
