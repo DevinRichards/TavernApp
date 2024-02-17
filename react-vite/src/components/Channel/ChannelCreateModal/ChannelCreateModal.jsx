@@ -21,16 +21,13 @@ function ChannelCreateModal() {
     };
 
     try {
-      // Reset errors before making the request
+
       setErrors({});
       await dispatch(thunkCreateChannel(channelData));
-      // Fetch channels after successful creation to update the list
       dispatch(thunkFetchChannels(server.id));
-      // Optionally, close the modal after successful channel creation
       closeModal();
     } catch (error) {
       console.error("Error in handleSubmit:", error);
-      // Update errors based on the error received
       setErrors({
         channel: "Failed to create channel. Please try again.",
       });

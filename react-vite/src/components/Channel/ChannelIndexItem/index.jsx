@@ -4,7 +4,6 @@ import ChannelSettingButton from '../ChannelSettingButton/ChannelSettingButton';
 import { thunkFetchChannels } from '../../../redux/channel';
 
 const ChannelIndexItem = ( props ) => {
-  console.log("This is props in Channel Index Item", props)
   const { id, name, description } = props.channel;
 
   const handleClick = (e) => {

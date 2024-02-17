@@ -73,20 +73,14 @@ export const thunkCreateServer = (serverData) => async (dispatch) => {
 
 
 export const thunkUpdateServer = (serverUpdateData) => async (dispatch) => {
-  console.log("This is serverUpdateData", serverUpdateData)
   const { serverId, serverData } = serverUpdateData;
-  console.log("This is serverID", serverId)
-  console.log("This is serverData", serverData)
   const response = await fetch(`/api/servers/${serverId}/update`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(serverData)
   });
-
-  console.log("This is response", response)
   if(response.ok) {
     const data = await response.json();
-    console.log("This is Data", data)
     dispatch(setCurrentServer(data));
   } else if (response.status < 500) {
     const errorMessages = await response.json();

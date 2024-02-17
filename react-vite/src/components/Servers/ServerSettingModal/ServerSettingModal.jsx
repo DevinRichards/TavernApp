@@ -15,15 +15,12 @@ function ServerSettingModal({ server }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("Server prop:", server); // Add debug statement
     setServerName(server?.name || "");
     setProfilePictureUrl(server?.profilePictureUrl || "");
   }, [server]);
 
   const handleUpdateServer = async (e) => {
     e.preventDefault();
-
-    console.log("Updating server with data:", { serverID, serverName, profilePictureUrl });
 
     const updatedServerData = {
       serverId: serverID,
@@ -33,12 +30,9 @@ function ServerSettingModal({ server }) {
       }
     };
 
-    console.log("Sending update request with data:", updatedServerData);
-
     try {
       setErrors({});
       await dispatch(thunkUpdateServer(updatedServerData));
-      console.log("Server update successful");
       closeModal();
     } catch (error) {
       console.error("Error in handleUpdateServer:", error);
@@ -50,10 +44,8 @@ function ServerSettingModal({ server }) {
 
   const handleDeleteServer = async () => {
     try {
-      console.log("Deleting server with ID:", server.id);
       await dispatch(thunkDeleteServer(server.id));
       await dispatch(thunkFetchServers());
-      console.log("Server deletion successful");
       navigate(`/servers/${servers[0].id}`)
       closeModal();
     } catch (error) {

@@ -12,7 +12,6 @@ function ChannelSettingModal(props) {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    console.log("Channel prop:", props.channel);
     setChannelName(props.channel?.name || "");
     setDescription(props.channel?.description || "");
   }, [props.channel])

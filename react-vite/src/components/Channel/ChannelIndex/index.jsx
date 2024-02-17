@@ -32,7 +32,6 @@ const ChannelIndex = ({ num, selectedServer }) => {
           {num !== 4 && Object.values(allChannels).map((channel, index) => (
             (!selectedServer || channel.serverId === selectedServer.id) && (
               <li key={index} className="flex items-center py-1 hover:bg-gray-700 rounded cursor-pointer">
-                {console.log("This is channel from Channel Index", channel)}
                 <ChannelIndexItem channel={channel} key={channel.id} />
               </li>
             )

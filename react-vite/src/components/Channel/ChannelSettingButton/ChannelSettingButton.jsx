@@ -5,7 +5,6 @@ import ChannelSettingModal from '../ChannelSettingModal/ChannelSettingModal';
 import { thunkFetchChannelById } from '../../../redux/channel';
 
 const ChannelSettingButton = (props) => {
-  console.log("this is props in channelSetting Button", props)
   const ulRef = useRef(null);
   const [showMenu, setShowMenu] = useState(false);
   const server = useSelector(state => state.server?.currentServer);
