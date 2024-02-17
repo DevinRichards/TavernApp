@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { thunkUpdateServer, thunkDeleteServer } from "../../../redux/server";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { thunkUpdateServer, thunkDeleteServer, thunkFetchServers } from "../../../redux/server";
 import { useModal } from "../../../context/Modal";
 
 function ServerSettingModal({ server }) {
@@ -10,6 +11,9 @@ function ServerSettingModal({ server }) {
   const [profilePictureUrl, setProfilePictureUrl] = useState("");
   const [errors, setErrors] = useState({});
   const serverID = server.id;
+  const servers = useSelector(state => state.server?.servers)
+  console.log("this is servers:", servers)
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log("Server prop:", server); // Add debug statement
@@ -49,7 +53,9 @@ function ServerSettingModal({ server }) {
     try {
       console.log("Deleting server with ID:", server.id);
       await dispatch(thunkDeleteServer(server.id));
+      await dispatch(thunkFetchServers());
       console.log("Server deletion successful");
+      navigate(`/servers/${servers[0].id}`)
       closeModal();
     } catch (error) {
       console.error("Error in handleDeleteServer:", error);
