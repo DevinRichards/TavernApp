@@ -1,7 +1,4 @@
 .env
 dev.db
-<<<<<<< HEAD
-=======
 _pycache_/
 *.pyc
->>>>>>> master
