@@ -1,27 +1,41 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { thunkUpdateServer,thunkDeleteServer } from "../../../redux/server";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { thunkUpdateServer, thunkDeleteServer } from "../../../redux/server";
 import { useModal } from "../../../context/Modal";
 
 function ServerSettingModal({ server }) {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
-  const [serverName, setServerName] = useState(server?.name);
-  const [description, setDescription] = useState(server?.description);
+  const [serverName, setServerName] = useState("");
+  const [profilePictureUrl, setProfilePictureUrl] = useState("");
   const [errors, setErrors] = useState({});
+  const serverID = server.id;
+
+  useEffect(() => {
+    console.log("Server prop:", server); // Add debug statement
+    setServerName(server?.name || "");
+    setProfilePictureUrl(server?.profilePictureUrl || "");
+  }, [server]);
 
   const handleUpdateServer = async (e) => {
     e.preventDefault();
 
+    console.log("Updating server with data:", { serverID, serverName, profilePictureUrl });
+
     const updatedServerData = {
-      id: server.id,
-      name: serverName,
-      description: description,
+      serverId: serverID,
+      serverData: {
+        name: serverName,
+        profilePictureUrl: profilePictureUrl,
+      }
     };
+
+    console.log("Sending update request with data:", updatedServerData);
 
     try {
       setErrors({});
       await dispatch(thunkUpdateServer(updatedServerData));
+      console.log("Server update successful");
       closeModal();
     } catch (error) {
       console.error("Error in handleUpdateServer:", error);
@@ -33,7 +47,9 @@ function ServerSettingModal({ server }) {
 
   const handleDeleteServer = async () => {
     try {
+      console.log("Deleting server with ID:", server.id);
       await dispatch(thunkDeleteServer(server.id));
+      console.log("Server deletion successful");
       closeModal();
     } catch (error) {
       console.error("Error in handleDeleteServer:", error);
@@ -50,7 +66,6 @@ function ServerSettingModal({ server }) {
       {errors.server && <p className="text-red-500">{errors.server}</p>}
 
       <form onSubmit={handleUpdateServer}>
-
         <div className="mb-4">
           <label className="block text-white">Server Name</label>
           <input
@@ -63,21 +78,28 @@ function ServerSettingModal({ server }) {
         </div>
 
         <div className="mb-4">
-          <label className="block text-white">Server Description</label>
+          <label className="block text-white">Server Picture</label>
           <input
             type="text"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            value={profilePictureUrl}
+            onChange={(e) => setProfilePictureUrl(e.target.value)}
             className="form-input mt-1 block w-full text-white bg-gray-700"
             required
           />
         </div>
 
         <div className="flex justify-between items-center">
-          <button type="submit" className="bg-blue-500 text-white p-2 rounded-md w-1/2">
+          <button
+            type="submit"
+            className="bg-blue-500 text-white p-2 rounded-md w-1/2"
+          >
             Update Server
           </button>
-          <button type="button" onClick={handleDeleteServer} className="bg-red-500 text-white p-2 rounded-md w-1/2 ml-2">
+          <button
+            type="button"
+            onClick={handleDeleteServer}
+            className="bg-red-500 text-white p-2 rounded-md w-1/2 ml-2"
+          >
             Delete Server
           </button>
         </div>

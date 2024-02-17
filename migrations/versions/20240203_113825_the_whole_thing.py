@@ -32,7 +32,7 @@ def upgrade():
     )
     op.create_table('servers',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('profilePictureUrl', sa.String(length=255), nullable=False),
+    sa.Column('profilePictureUrl', sa.String(length=255)),
     sa.Column('ownerId', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=40), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=True),

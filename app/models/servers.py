@@ -8,7 +8,7 @@ class Server(db.Model):
       __table_args__ = {'schema': SCHEMA}
 
   id = db.Column(db.Integer, primary_key=True)
-  profilePictureUrl = db.Column(db.String(255), nullable=False, default="https://fontawesome.com/icons/user?f=classic&s=solid")
+  profilePictureUrl = db.Column(db.String(255), default="https://fontawesome.com/icons/user?f=classic&s=solid")
   ownerId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
   name = db.Column(db.String(40), nullable=False)
   created_at = db.Column(db.DateTime, default=datetime.utcnow)

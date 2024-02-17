@@ -3,6 +3,10 @@ from flask_login import login_required, current_user
 from app.models import db, Server, Channel
 from app.forms.server_form import ServerForm
 from app.forms.channel_form import ChannelForm
+import logging
+
+# Set up logging
+logging.basicConfig(level=logging.DEBUG)
 
 server_routes = Blueprint('servers', __name__)
 
@@ -50,26 +54,37 @@ def create_server():
 @server_routes.route('/<int:serverId>/update', methods=['PUT'])
 @login_required
 def update_server(serverId):
-    form = ServerForm(request.form)
+    form = ServerForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
 
     server = Server.query.get(serverId)
 
     if not server:
+        logging.error(f"Server {serverId} does not exist.")
         return {'errors': f"Server {serverId} does not exist."}, 400
 
     if server.ownerId != current_user.id:
+        logging.error(f"Server {serverId} must be created by the current user.")
         return {'errors': f"Server {serverId} must be created by the current user."}, 401
 
+    logging.debug("Form data: %s", form.data)
     if not form.validate_on_submit():
-        print("there are some errors in the form--------------------")
-        print(form.errors)
+        logging.error("Form validation failed. Errors: %s", form.errors)
         return jsonify({"error": "Form validation failed", "details": form.errors}), 400
 
+    logging.debug("Server object: %s", server)
     server.profilePictureUrl = form.data['profilePictureUrl']
     server.name = form.data['name']
 
-    db.session.commit()
-    return jsonify(server.to_dict())
+    try:
+        db.session.commit()
+        logging.info("Server update successful.")
+        return jsonify(server.to_dict())
+    except Exception as e:
+        logging.error("An error occurred during database commit: %s", e)
+        db.session.rollback()
+        return jsonify({"error": "An error occurred during database commit"}), 500
+
 
 @server_routes.route('/<int:serverId>/delete', methods = ['DELETE'])
 @login_required
@@ -92,7 +107,7 @@ def get_channels_by_server(serverId):
         return {'errors': f"Server {serverId} does not exist."}, 400
 
     else:
-        channels = Channel.query.filter_by(serverId=serverId).all()  
+        channels = Channel.query.filter_by(serverId=serverId).all()
         channels_list = [channel.to_dict() for channel in channels]
         return jsonify({'channels': channels_list})
 
