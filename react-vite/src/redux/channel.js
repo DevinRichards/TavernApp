@@ -35,6 +35,10 @@ export const thunkFetchChannels = (serverId) => async (dispatch) => {
 };
 
 export const thunkCreateChannel = (channelData) => async (dispatch) => {
+  console.log("This is channelData", channelData)
+  const { serverId } = channelData;
+  console.log("This is serverID", serverId)
+  console.log("This is channelData after deconstruct", channelData)
   try {
     const response = await fetch(`/api/servers/${serverId}/channels/create`, {
       method: "POST",
@@ -52,6 +56,7 @@ export const thunkCreateChannel = (channelData) => async (dispatch) => {
 };
 
 export const thunkUpdateChannel = (channelId, channelData) => async (dispatch) => {
+
   try {
     const response = await fetch(`/api/channels/${channelId}/update`, {
       method: "PUT",

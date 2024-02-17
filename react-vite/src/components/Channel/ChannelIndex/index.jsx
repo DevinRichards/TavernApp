@@ -8,6 +8,7 @@ const ChannelIndex = ({ num, selectedServer }) => {
   const dispatch = useDispatch();
   const allChannels = useSelector(state => state.channel?.channels) || {};
   const [isLoading, setIsLoading] = useState(true);
+  
 
   useEffect(() => {
     if (selectedServer) {

@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkCreateChannel } from "../../../redux/channel";
+import { thunkCreateChannel, thunkFetchChannels } from "../../../redux/channel";
 import { useModal } from "../../../context/Modal";
 
 function ChannelCreateModal() {
   const dispatch = useDispatch();
-  const sessionUser = useSelector((state) => state.session.user);
   const server = useSelector(state => state.server?.currentServer) || {};
   const { closeModal } = useModal();
   const [channelName, setChannelName] = useState("");
@@ -15,7 +14,6 @@ function ChannelCreateModal() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("This is Server", server)
     const channelData = {
       description: description,
       serverId: server.id,
@@ -26,6 +24,8 @@ function ChannelCreateModal() {
       // Reset errors before making the request
       setErrors({});
       await dispatch(thunkCreateChannel(channelData));
+      // Fetch channels after successful creation to update the list
+      dispatch(thunkFetchChannels(server.id));
       // Optionally, close the modal after successful channel creation
       closeModal();
     } catch (error) {
