@@ -34,6 +34,23 @@ export const thunkFetchChannels = (serverId) => async (dispatch) => {
   }
 };
 
+export const thunkFetchChannelById = (serverId, channelId) => async (dispatch) => {
+  try {
+    const response = await fetch(`/api/${serverId}/${channelId}`);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch channel. Status: ${response.status}`);
+    }
+    const data = await response.json();
+    if (data.errors) {
+      return;
+    }
+    dispatch(setCurrentChannel(data.channel[0])); 
+  } catch (error) {
+    console.error("Error fetching channel:", error);
+  }
+};
+
+
 export const thunkCreateChannel = (channelData) => async (dispatch) => {
   console.log("This is channelData", channelData)
   const { serverId } = channelData;

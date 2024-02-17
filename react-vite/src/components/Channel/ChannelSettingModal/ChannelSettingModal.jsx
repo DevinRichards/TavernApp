@@ -1,20 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkDeleteChannel, thunkUpdateChannel } from "../../../redux/channel";
+import { thunkDeleteChannel, thunkFetchChannels, thunkUpdateChannel } from "../../../redux/channel";
 import { useModal } from "../../../context/Modal";
 
-function ChannelSettingModal({ channel }) {
+function ChannelSettingModal(props) {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
-  const [channelName, setChannelName] = useState(channel?.name);
-  const [description, setDescription] = useState(channel?.description);
+  const [channelName, setChannelName] = useState(props.channel?.name);
+  const [description, setDescription] = useState(props.channel?.description);
   const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    console.log("Channel prop:", props.channel);
+    setChannelName(props.channel?.name || "");
+    setDescription(props.channel?.description || "");
+  }, [props.channel])
 
   const handleUpdateChannel = async (e) => {
     e.preventDefault();
 
     const updatedChannelData = {
-      id: channel.id,
+      id: props.channel.id,
       name: channelName,
       description: description,
     };
@@ -33,7 +39,8 @@ function ChannelSettingModal({ channel }) {
 
   const handleDeleteChannel = async () => {
     try {
-      await dispatch(thunkDeleteChannel(channel.id));
+      await dispatch(thunkDeleteChannel(props.channel.id));
+      await dispatch(thunkFetchChannels());
       closeModal();
     } catch (error) {
       console.error("Error in handleDeleteChannel:", error);

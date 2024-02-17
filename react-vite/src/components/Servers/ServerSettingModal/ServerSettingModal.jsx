@@ -12,7 +12,6 @@ function ServerSettingModal({ server }) {
   const [errors, setErrors] = useState({});
   const serverID = server.id;
   const servers = useSelector(state => state.server?.servers)
-  console.log("this is servers:", servers)
   const navigate = useNavigate();
 
   useEffect(() => {
