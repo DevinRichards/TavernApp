@@ -20,11 +20,13 @@ def seed_servers():
     general_channel1 = Channel(
         name='General',
         server=server1,
+        description='General chat channel'
     )
 
     announcements_channel1 = Channel(
         name='Announcements',
         server=server1,
+        description='Announcement channel'
     )
 
     server2 = Server(
@@ -41,11 +43,13 @@ def seed_servers():
     general_channel2 = Channel(
         name='General',
         server=server2,
+        description='General chat channel',
     )
 
     random_channel2 = Channel(
         name='Random',
         server=server2,
+        description='Random chat channel',
     )
 
     server3 = Server(
@@ -62,11 +66,13 @@ def seed_servers():
     general_channel3 = Channel(
         name='General',
         server=server3,
+        description='General chat channel',
     )
 
     music_channel3 = Channel(
         name='Music',
         server=server3,
+        description='Music chat channel',
     )
 
     server4 = Server(
@@ -77,17 +83,20 @@ def seed_servers():
 >>>>>>> master
         ownerId=4,
         name='Server 4',
+
     )
 
     # Create channels and associate them with the server
     general_channel4 = Channel(
         name='General',
         server=server4,
+        description='General chat channel',
     )
 
     gaming_channel4 = Channel(
         name='Gaming',
         server=server4,
+        description='Gaming chat channel',
     )
 
     server5 = Server(
@@ -104,11 +113,13 @@ def seed_servers():
     general_channel5 = Channel(
         name='General',
         server=server5,
+        description='General chat channel',
     )
 
     tech_channel5 = Channel(
         name='Tech',
         server=server5,
+        description='Tech chat channel',
     )
 
     db.session.add_all([

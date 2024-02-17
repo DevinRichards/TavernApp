@@ -1,29 +1,26 @@
-<<<<<<< HEAD
-import { useState } from "react";
-import { thunkLogin } from "../../redux/session";
-import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
-import "./LoginForm.css";
-
-function LoginFormPage() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-=======
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { thunkLogin, thunkLogout } from "../../redux/session";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate, Link } from "react-router-dom";
+import { thunkFetchServers } from "../../redux/server";
 
 function LoginFormPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 >>>>>>> master
   const sessionUser = useSelector((state) => state.session.user);
+  const allServers = useSelector(state => state.server?.servers)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
 
-  if (sessionUser) return <Navigate to="/" replace={true} />;
+  if (sessionUser){
+    dispatch(thunkFetchServers)
+    if (allServers && allServers.length > 0) {
+      const firstServerId = allServers[0].id;
+      navigate(`/servers/${firstServerId}`);
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,16 +39,6 @@ function LoginFormPage() {
     }
   };
 
-<<<<<<< HEAD
-  return (
-    <>
-      <h1>Log In</h1>
-      {errors.length > 0 &&
-        errors.map((message) => <p key={message}>{message}</p>)}
-      <form onSubmit={handleSubmit}>
-        <label>
-          Email
-=======
   const handleDemoLogin = async (e) => {
     e.preventDefault();
     await dispatch(thunkLogout());
@@ -63,47 +50,28 @@ function LoginFormPage() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-8">
-      <h1 className="text-2xl font-bold mb-4">Log In</h1>
-      {errors.length > 0 && errors.map((message) => <p key={message}>{message}</p>)}
+    <div>
+      <h1 className="text-2xl font-bold mb-4 text-white">Log In</h1>
+      {errors.length > 0 && errors.map((message, index) => <p key={index} className="text-red-500">{message}</p>)}
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label className="block text-gray-700">Email</label>
->>>>>>> master
+          <label className="block text-white">Email</label>
           <input
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-<<<<<<< HEAD
-            required
-          />
-        </label>
-        {errors.email && <p>{errors.email}</p>}
-        <label>
-          Password
-=======
-            className="form-input mt-1 block w-full"
+            className="form-input mt-1 block w-full text-white bg-gray-700"
             required
           />
           {errors.email && <p className="text-red-500">{errors.email}</p>}
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700">Password</label>
->>>>>>> master
+          <label className="block text-white">Password</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-<<<<<<< HEAD
-            required
-          />
-        </label>
-        {errors.password && <p>{errors.password}</p>}
-        <button type="submit">Log In</button>
-      </form>
-    </>
-=======
-            className="form-input mt-1 block w-full"
+            className="form-input mt-1 block w-full text-white bg-gray-700"
             required
           />
           {errors.password && <p className="text-red-500">{errors.password}</p>}
@@ -123,7 +91,7 @@ function LoginFormPage() {
           </button>
         </div>
         <div className="text-center">
-          <p>
+          <p className="text-white">
             Need an Account?{" "}
             <Link to="/register" className="text-blue-500">
               Register

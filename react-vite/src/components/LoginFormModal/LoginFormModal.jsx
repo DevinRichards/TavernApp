@@ -8,7 +8,6 @@ import "./LoginForm.css";
 import { thunkLogin, thunkLogout } from "../../redux/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import "./LoginForm.css";
 import { Link } from 'react-router-dom';
 >>>>>>> master
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkCreateServer } from "../../../redux/server";
+import { thunkCreateServer, thunkFetchServers } from "../../../redux/server";
 import { useModal } from "../../../context/Modal";
 
 function ServerCreateModal() {
@@ -24,6 +24,8 @@ function ServerCreateModal() {
       // Reset errors before making the request
       setErrors({});
       await dispatch(thunkCreateServer(serverData));
+      // Fetch servers after successful creation to update the list
+      dispatch(thunkFetchServers());
       // Optionally, close the modal after successful server creation
       closeModal();
     } catch (error) {
@@ -36,39 +38,39 @@ function ServerCreateModal() {
   };
 
   return (
-    <div>
-      <h1>Create Server</h1>
+    <div className="max-w-md mx-auto mt-8 bg-gray-800 p-8 rounded-lg">
+      <h1 className="text-2xl font-bold mb-4 text-white">Create Server</h1>
 
-      {errors.server && <p>{errors.server}</p>}
+      {errors.server && <p className="text-red-500">{errors.server}</p>}
 
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>
-            Add A Picture URL
-            <input
-              type="text"
-              value={profilePictureUrl}
-              onChange={(e) => setProfilePictureUrl(e.target.value)}
-              required
-            />
-          </label>
-          {errors.profilePictureUrl && <p>{errors.profilePictureUrl}</p>}
+        <div className="mb-4">
+          <label className="block text-white">Add A Picture URL</label>
+          <input
+            type="text"
+            value={profilePictureUrl}
+            onChange={(e) => setProfilePictureUrl(e.target.value)}
+            className="form-input mt-1 block w-full text-white bg-gray-700"
+            required
+          />
+          {errors.profilePictureUrl && <p className="text-red-500">{errors.profilePictureUrl}</p>}
         </div>
 
-        <div>
-          <label>
-            Server Name
-            <input
-              type="text"
-              value={serverName}
-              onChange={(e) => setServerName(e.target.value)}
-              required
-            />
-          </label>
-          {errors.name && <p>{errors.name}</p>}
+        <div className="mb-4">
+          <label className="block text-white">Server Name</label>
+          <input
+            type="text"
+            value={serverName}
+            onChange={(e) => setServerName(e.target.value)}
+            className="form-input mt-1 block w-full text-white bg-gray-700"
+            required
+          />
+          {errors.name && <p className="text-red-500">{errors.name}</p>}
         </div>
 
-        <button type="submit">Create Server</button>
+        <button type="submit" className="bg-blue-500 text-white p-2 rounded-md w-full">
+          Create Server
+        </button>
       </form>
     </div>
   );

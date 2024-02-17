@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const ServerIndexItem = ({ server }) => {
-  console.log("Server in ServerIndexItem:", server);
   const { id, name, profilePictureUrl } = server;
 
   const containerStyle = {
@@ -10,7 +9,7 @@ const ServerIndexItem = ({ server }) => {
   };
 
   return (
-    <div className='serverTile group relative overflow-hidden' style={containerStyle}>
+    <div className='serverTile group relative overflow-hidden w-full' style={containerStyle}>
       <Link id="serverLinkWithText" to={`/servers/${server.id}`} key={`${id}`}>
         <div id="serverGrid1" className="flex items-center">
           <div id="serverItem1" className="relative">
@@ -26,4 +25,3 @@ const ServerIndexItem = ({ server }) => {
 };
 
 export default ServerIndexItem;
-
