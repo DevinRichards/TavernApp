@@ -8,6 +8,7 @@ const ChannelSettingButton = (props) => {
   const ulRef = useRef(null);
   const [showMenu, setShowMenu] = useState(false);
   const server = useSelector(state => state.server?.currentServer);
+  const currentUser = useSelector(state => state.session.user);
   const serverId = server?.id
   const channelId = props.channel?.id
   const dispatch = useDispatch();
@@ -18,7 +19,6 @@ const ChannelSettingButton = (props) => {
     }
   };
 
-
   const handleFetchChannel = async (serverId, channelId) => {
     try {
       await dispatch(thunkFetchChannelById(serverId, channelId));
@@ -26,6 +26,16 @@ const ChannelSettingButton = (props) => {
       console.error("Error fetching channel:", error);
     }
   };
+
+  const handleClick = () => {
+    if (currentUser && currentUser.id === server.ownerId) {
+      setShowMenu(true);
+      handleFetchChannel(serverId, channelId);
+    }
+    else{
+      alert("You do not have permission to make these changes.")
+    }
+  }
 
   const containerStyle = {
     backgroundColor: 'rgb(43,45,49)',
@@ -35,16 +45,13 @@ const ChannelSettingButton = (props) => {
     <div className='serverTile group relative overflow-hidden' style={containerStyle}>
       <button
         className="flex items-center justify-center h-12 w-12 rounded-full hover:bg-gray-700 transition-all duration-300 ease-in-out"
-        onClick={() => {
-          setShowMenu(true);
-          handleFetchChannel(serverId, channelId);
-        }}
+        onClick={handleClick}
       >
         <OpenModalMenuItem
           className="text-green-500 text-2xl"
           itemText="▾"
           onItemClick={closeMenu}
-          modalComponent={<ChannelSettingModal channel={props.channel} />}
+          modalComponent={currentUser && currentUser.id === server.ownerId && showMenu ? <ChannelSettingModal channel={props.channel} />: null}
         />
       </button>
     </div>
