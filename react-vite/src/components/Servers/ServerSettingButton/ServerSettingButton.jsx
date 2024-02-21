@@ -8,6 +8,7 @@ const ServerSettingButton = () => {
   const ulRef = useRef(null);
   const [showMenu, setShowMenu] = useState(false);
   const server = useSelector(state => state.server?.currentServer) || {};
+  const currentUser = useSelector(state => state.session.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -20,6 +21,15 @@ const ServerSettingButton = () => {
     }
   };
 
+  const handleClick = () => {
+    if (currentUser && currentUser.id === server.ownerId) {
+      setShowMenu(true);
+    }
+    else{
+      alert("You do not have permission to make these changes.")
+    }
+  };
+
   const containerStyle = {
     backgroundColor: 'rgb(43, 45, 49)',
   };
@@ -28,13 +38,13 @@ const ServerSettingButton = () => {
     <div className='serverTile group relative overflow-hidden' style={containerStyle}>
       <button
         className="flex items-center justify-center h-12 w-12 rounded-full hover:bg-gray-700 transition-all duration-300 ease-in-out"
-        onClick={() => setShowMenu(true)}
+        onClick={handleClick}
       >
         <OpenModalMenuItem
           className="text-green-500 text-2xl"
           itemText="▾"
           onItemClick={closeMenu}
-          modalComponent={<ServerSettingModal server={server} />}
+          modalComponent={currentUser && currentUser.id === server.ownerId && showMenu ? <ServerSettingModal server={server} /> : null}
         />
       </button>
     </div>
