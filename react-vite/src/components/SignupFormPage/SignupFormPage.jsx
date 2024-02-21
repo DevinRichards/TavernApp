@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { thunkSignup } from "../../redux/session";
@@ -15,22 +15,60 @@ function SignupFormPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
 
-  if (sessionUser){
-    dispatch(thunkFetchServers)
-    if (allServers && allServers.length > 0) {
-      const firstServerId = allServers[0].id;
-      navigate(`/servers/${firstServerId}`);
+  useEffect(() => {
+    if (sessionUser){
+      console.log("a session user exits")
+      dispatch(thunkFetchServers)
+      if (allServers && allServers.length > 0) {
+        const firstServerId = allServers[0].id;
+        navigate(`/servers/${firstServerId}`);
+      }
     }
-  }
+  }, [sessionUser, allServers, dispatch, navigate]);
+
+  useEffect(() => {
+    if (Object.keys(errors).length === 0) {
+      setErrors({});
+    }
+  }, [email, username, password, confirmPassword]);
+
+  const validateEmail = (email) => {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  };
+
+  const validateUsername = (username) => {
+    return username.length >= 5;
+  };
+
+  const validatePassword = (password) => {
+    return password.length >= 5;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    let formErrors = {};
+
+    if (!validateEmail(email)) {
+      formErrors.email = "Please enter a valid email address";
+    }
+
+    if (!validateUsername(username)) {
+      formErrors.username = "Username must be at least 5 characters long";
+    }
+
+    if (!validatePassword(password)) {
+      formErrors.password = "Password must be at least 5 characters long";
+    }
+
     if (password !== confirmPassword) {
-      return setErrors({
-        confirmPassword:
-          "Confirm Password field must be the same as the Password field",
-      });
+      formErrors.confirmPassword =
+        "Confirm Password field must be the same as the Password field";
+    }
+
+    if (Object.keys(formErrors).length > 0) {
+      return setErrors(formErrors);
     }
 
     const serverResponse = await dispatch(
@@ -38,11 +76,13 @@ function SignupFormPage() {
         email,
         username,
         password,
-      })
+      }),
     );
 
     if (serverResponse) {
       setErrors(serverResponse);
+      await dispatch(thunkFetchServers),
+      navigate(`/servers/1`)
     }
   };
 
