@@ -2,11 +2,13 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { thunkSignup } from "../../redux/session";
+import { thunkFetchServers } from "../../redux/server";
 
 function SignupFormPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const sessionUser = useSelector((state) => state.session.user);
+  const allServers = useSelector(state => state.server?.servers)
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
