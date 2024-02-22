@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { thunkFetchChannels } from '../../../redux/channel';
+import { setCurrentChannel, thunkFetchChannels } from '../../../redux/channel';
 import ChannelIndex from '../../Channel/ChannelIndex';
 import { thunkFetchServerById, thunkFetchServers } from '../../../redux/server';
 import ServerIndex from '../ServerIndexNavbar';
@@ -14,6 +14,7 @@ const ServerDetail = () => {
   const { serverId } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const server = useSelector(state => state.server?.currentServer) || {};
+  const selectedChannel = useSelector(state => state.channel?.currentChannel) || {};
 
   // const channels = useSelector(state => state.channelsReducer[serverId]);
 
@@ -26,8 +27,8 @@ const ServerDetail = () => {
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
   };
-  const handleServerSelect = (server) => {
-    setSelectedServer(server);
+  const handleChannelSelect = (channelId) => {
+    setCurrentChannel(channelId);
   };
 
   if (isLoading) return <>Loading...</>;
@@ -39,13 +40,13 @@ const ServerDetail = () => {
         <ServerSettingButton />
       </div>
 
-      <div className='flex'> 
+      <div className='flex'>
         <div className='flex-none'>
-          <ChannelIndex selectedServer={server} />
+          <ChannelIndex selectedServer={server} onSelectChannel={handleChannelSelect} /> {/* Pass onSelectChannel handler */}
         </div>
-        <div className='flex-grow'>
-          <Chat selectedServer={server}/>
-        </div>
+        {/* <div className='flex-grow'>
+          <Chat selectedServer={server} selectedChannel={selectedChannel} />
+        </div> */}
       </div>
     </div>
   );
