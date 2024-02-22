@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { io } from 'socket.io-client';
+import { sendMessage, receiveMessage } from "../../redux/chat";
 let socket;
 
 const Chat = () => {
     const [chatInput, setChatInput] = useState("");
     const [messages, setMessages] = useState([]);
+    const displayMessages = useSelector(state => state.messages.messages);
     const user = useSelector(state => state.session.user)
+    const dispatch = useDispatch();
 
     useEffect(() => {
         // open socket connection
@@ -29,13 +32,15 @@ const Chat = () => {
     const sendChat = (e) => {
         e.preventDefault()
         socket.emit("chat", { user: user.username, msg: chatInput });
+        dispatch(sendMessage({ user: user.username, msg: chatInput }));
         setChatInput("")
     }
 
     return (user && (
         <div>
+            <h1>Hello from Chat</h1>
             <div>
-                {messages.map((message, ind) => (
+                {displayMessages.map((message, ind) => (
                     <div key={ind}>{`${message.user}: ${message.msg}`}</div>
                 ))}
             </div>

@@ -6,6 +6,7 @@ import ChannelIndex from '../../Channel/ChannelIndex';
 import { thunkFetchServerById, thunkFetchServers } from '../../../redux/server';
 import ServerIndex from '../ServerIndexNavbar';
 import ServerSettingButton from '../ServerSettingButton/ServerSettingButton';
+import Chat from '../../Chat/Chat';
 
 const ServerDetail = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -33,17 +34,19 @@ const ServerDetail = () => {
 
   return (
     <div className='serverComponent'>
-      <div className='serverHeader' onClick={toggleDropdown}>
-        <div>
-          <h1 className='text-white' style={{ backgroundColor: 'rgb(43,45,49)' }}>{server.name}</h1>
-        </div>
-        <div className="ml-2" >
-          <ServerSettingButton />
-        </div>
+      <div className='serverHeader flex justify-between items-center bg-gray-800 p-4 text-white' onClick={toggleDropdown}>
+        <h1>{server.name}</h1>
+        <ServerSettingButton />
       </div>
 
-      <ChannelIndex selectedServer={server} />
-
+      <div className='flex'> 
+        <div className='flex-none'>
+          <ChannelIndex selectedServer={server} />
+        </div>
+        <div className='flex-grow'>
+          <Chat selectedServer={server}/>
+        </div>
+      </div>
     </div>
   );
 };

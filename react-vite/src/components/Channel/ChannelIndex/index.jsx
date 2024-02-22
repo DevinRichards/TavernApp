@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { thunkFetchChannels } from '../../../redux/channel';
 import ChannelIndexItem from "../ChannelIndexItem"
 import AddChannelButton from '../AddChannelButton/AddChannel';
+import Chat from '../../Chat/Chat';
 
 const ChannelIndex = ({ num, selectedServer }) => {
   const dispatch = useDispatch();
