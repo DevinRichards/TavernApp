@@ -35,17 +35,19 @@ const ServerDetail = () => {
 
   return (
     <div className='serverComponent'>
-      <div className='serverHeader flex justify-between items-center bg-gray-800 p-4 text-white' onClick={toggleDropdown}>
-        <h1>{server.name}</h1>
-        <ServerSettingButton />
+      <div className='serverHeader flex justify-between items-center bg-gray-800 p-4 text-white' style={{ backgroundColor: 'rgb(43,45,49)' }}onClick={toggleDropdown}>
+        <div className='flex items-center'>
+          <h1 className='mr-2'>{server.name}</h1>
+          <ServerSettingButton />
+        </div>
       </div>
 
       <div className='flex'>
         <div className='flex-none'>
-          <ChannelIndex selectedServer={server} currentChannel = {currentChannel} setCurrentChannel = {setCurrentChannel} />
+          <ChannelIndex selectedServer={server} currentChannel={currentChannel} setCurrentChannel={setCurrentChannel} />
         </div>
         <div className='flex-grow'>
-          <Chat currentChannel = {currentChannel} />
+          <Chat currentChannel={currentChannel} />
         </div>
       </div>
     </div>
