@@ -1,29 +1,30 @@
-import React, {useEffect} from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import ChannelSettingButton from '../ChannelSettingButton/ChannelSettingButton';
 import { thunkFetchChannels } from '../../../redux/channel';
 
-const ChannelIndexItem = ( props ) => {
-  const { id, name, description } = props.channel;
+const ChannelIndexItem = (props) => {
+  const { id, name, description} = props.channel;
+  const {setCurrentChannel, currentChannel} = props
 
-  const handleClick = (e) => {
-    e.preventDefault();
+  const handleChannelSelect = () => {
+    setCurrentChannel(id);
   };
+  console.log("This is the current Channel in channel index Item",currentChannel)
 
 
   return (
     <div className='channelTile'>
-      <Link id="channelLinkWithText" to={`/channels/${props.channel.id}`} key={`${id}`}>
+      <div id="channelLinkWithText" onClick={handleChannelSelect} >
         <div className="flex items-center">
           <div>
             <h2>{name}</h2>
           </div>
-          <div className="ml-2" onClick={handleClick}>
-            <ChannelSettingButton channel = {props.channel} />
+          <div className="ml-2">
+            <ChannelSettingButton channel={props.channel} />
           </div>
         </div>
         <div>{description}</div>
-      </Link>
+      </div>
     </div>
   );
 };

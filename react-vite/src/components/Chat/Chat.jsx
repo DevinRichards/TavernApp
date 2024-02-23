@@ -4,15 +4,16 @@ import { io } from 'socket.io-client';
 import { sendMessage } from "../../redux/chat";
 let socket;
 
-const Chat = (props) => {
-    console.log("This is props from chat", props)
+const Chat = ({currentChannel}) => {
     const [chatInput, setChatInput] = useState("");
     const displayMessages = useSelector(state => state.messages.messages);
     const user = useSelector(state => state.session.user);
-    const channel = useSelector(state => state.channel?.currentChannel) || {};
+    const channel = useSelector(state => state.channel) || {};
     const dispatch = useDispatch();
 
+    console.log("this is currentChannel In Chat", currentChannel)
     useEffect(() => {
+
         // open socket connection
         // create websocket
         socket = io();
@@ -37,7 +38,7 @@ const Chat = (props) => {
         const messageData = {
             msg: chatInput,
             senderId: user.username,
-            channelId: channel
+            channelId: channel.channelId
         };
         // Dispatch action to send message to server
         dispatch(sendMessage(messageData));
@@ -48,7 +49,8 @@ const Chat = (props) => {
     return (
         user && (
             <div>
-                <h1>Hello from {props.channel}</h1>
+                <div>{`${currentChannel}`}</div>
+                <h1>Hello from Chat</h1>
                 <div>
                     {displayMessages.map((message, ind) => (
                         <div key={ind}>{`${message.senderId}: ${message.msg}`}</div>
