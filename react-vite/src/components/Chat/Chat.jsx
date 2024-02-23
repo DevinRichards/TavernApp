@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { io } from 'socket.io-client';
-import { sendMessage } from "../../redux/chat";
+import { loadMessages, sendMessage } from "../../redux/chat";
 let socket;
 
 const Chat = ({currentChannel}) => {
     const [chatInput, setChatInput] = useState("");
-    const displayMessages = useSelector(state => state.messages.messages);
+    const displayMessages = useSelector(state =>
+        state.messages?.messages.filter(message => message.channelId === currentChannel)
+      );
+
     const user = useSelector(state => state.session.user);
-    const channel = useSelector(state => state.channel) || {};
     const dispatch = useDispatch();
 
     console.log("this is currentChannel In Chat", currentChannel)
-    useEffect(() => {
 
+    useEffect(() => {
         // open socket connection
         // create websocket
         socket = io();
@@ -29,6 +31,13 @@ const Chat = ({currentChannel}) => {
         };
     }, [dispatch]);
 
+    useEffect(() => {
+        // Load messages for the current channel when component mounts or currentChannel changes
+        if (currentChannel) {
+            dispatch(loadMessages(currentChannel));
+        }
+    }, [currentChannel, dispatch]);
+
     const updateChatInput = (e) => {
         setChatInput(e.target.value);
     };
@@ -38,7 +47,7 @@ const Chat = ({currentChannel}) => {
         const messageData = {
             msg: chatInput,
             senderId: user.username,
-            channelId: channel.channelId
+            channelId: currentChannel
         };
         // Dispatch action to send message to server
         dispatch(sendMessage(messageData));
@@ -52,8 +61,8 @@ const Chat = ({currentChannel}) => {
                 <div>{`${currentChannel}`}</div>
                 <h1>Hello from Chat</h1>
                 <div>
-                    {displayMessages.map((message, ind) => (
-                        <div key={ind}>{`${message.senderId}: ${message.msg}`}</div>
+                    {displayMessages?.map((message, ind) => (
+                        <div key={ind}>{`${message.senderId}: ${message.content}`}</div>
                     ))}
                 </div>
                 <form onSubmit={sendChat}>
