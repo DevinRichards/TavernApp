@@ -23,6 +23,10 @@ const ServerDetail = () => {
         setIsLoading(false))
   }, [dispatch, serverId]);
 
+  useEffect(() => {
+    setCurrentChannel("");
+  }, [serverId]);
+
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
   };
