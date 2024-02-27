@@ -52,7 +52,7 @@ const Chat = ({currentChannel}) => {
         e.preventDefault();
         const messageData = {
             msg: chatInput,
-            senderId: user.username,
+            senderId: user.id,
             channelId: currentChannel
         };
         // Dispatch action to send message to server
