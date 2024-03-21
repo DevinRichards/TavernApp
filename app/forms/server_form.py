@@ -4,6 +4,6 @@ from wtforms.validators import DataRequired
 
 
 class ServerForm(FlaskForm):
-  profilePictureUrl = StringField('Profile Picture URL')
   name = StringField('Server Name')
+  profilePictureUrl = StringField('Profile Picture URL')
   submit = SubmitField('Submit')

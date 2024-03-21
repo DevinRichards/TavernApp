@@ -1,8 +1,9 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from app.models import User, db
 from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
+from app.api.aws import (upload_file_to_s3, get_unique_filename)
 
 auth_routes = Blueprint('auth', __name__)
 
@@ -51,15 +52,30 @@ def sign_up():
     form = SignUpForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
+        data = form.data
+
+        profilePictureFile = data['profilePictureFile']
+        profilePictureFile.filename = get_unique_filename(profilePictureFile.filename)
+        upload = upload_file_to_s3(profilePictureFile)
+        print(upload)
+
+        if "url" not in upload:
+            return jsonify({"error": "S3 upload failed", "details": upload.get("error", "Unknown error")}), 500
+
+        profilePictureFile_url = upload['url']
         user = User(
             username=form.data['username'],
             email=form.data['email'],
-            password=form.data['password']
+            password=form.data['password'],
+            profilePictureFile = profilePictureFile_url
         )
+
+        print(user)
+
         db.session.add(user)
         db.session.commit()
         login_user(user)
-        return user.to_dict()
+        return jsonify(user.to_dict())
     return form.errors, 401
 
 

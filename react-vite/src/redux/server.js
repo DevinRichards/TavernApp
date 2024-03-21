@@ -12,6 +12,7 @@ export const setCurrentServer = (server) => ({
   payload: server
 });
 
+
 export const removeServer = () => ({
   type: REMOVE_SERVER
 });
@@ -28,41 +29,67 @@ export const thunkFetchServers = () => async (dispatch) => {
   }
 };
 
-export const thunkCreateServer = (serverData) => async (dispatch) => {
-  const response = await fetch("/api/servers/create", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(serverData)
-  });
+export const thunkFetchServerById = (serverId) => async (dispatch) => {
+  try {
+    const response = await fetch(`/api/servers/${serverId}`);
+    if (response.ok) {
+      const data = await response.json();
+      dispatch(setCurrentServer(data));
 
-  if(response.ok) {
-    const data = await response.json();
-    dispatch(setCurrentServer(data));
-  } else if (response.status < 500) {
-    const errorMessages = await response.json();
-    return errorMessages
-  } else {
-    return { server: "Something went wrong. Please try again" }
+      dispatch(thunkFetchServers());
+    } else if (response.status < 500) {
+      const errorMessages = await response.json();
+      throw new Error(JSON.stringify({ errors: errorMessages }));
+    } else {
+      throw new Error("Something went wrong. Please try again");
+    }
+  } catch (error) {
+    return error;
   }
 };
 
-export const thunkUpdateServer = (serverId, serverData) => async (dispatch) => {
+
+export const thunkCreateServer = (serverData) => async (dispatch) => {
+  try {
+    const response = await fetch("/api/servers/create", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(serverData)
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      dispatch(setCurrentServer(data));
+    } else if (response.status < 500) {
+      const errorMessages = await response.json();
+      throw new Error(JSON.stringify({ errors: errorMessages }));
+    } else {
+      throw new Error("Something went wrong. Please try again");
+    }
+  } catch (error) {
+    return JSON.parse(error.message);
+  }
+};
+
+
+export const thunkUpdateServer = (serverUpdateData) => async (dispatch) => {
+  const { serverId, serverData } = serverUpdateData;
   const response = await fetch(`/api/servers/${serverId}/update`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(serverData)
   });
-
   if(response.ok) {
     const data = await response.json();
     dispatch(setCurrentServer(data));
   } else if (response.status < 500) {
     const errorMessages = await response.json();
-    return errorMessages
+    return errorMessages;
   } else {
-    return { server: "Something went wrong. Please try again" }
+    return { server: "Something went wrong. Please try again" };
   }
 };
+
 
 export const thunkDeleteServer = (serverId) => async (dispatch) => {
   const response = await fetch(`/api/servers/${serverId}/delete`, {
