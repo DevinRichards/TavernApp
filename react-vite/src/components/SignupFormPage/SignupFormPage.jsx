@@ -12,11 +12,12 @@ function SignupFormPage() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [profilePictureFile, setprofilePictureFile] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    if (sessionUser){
+    if (sessionUser) {
       console.log("a session user exits")
       dispatch(thunkFetchServers)
       if (allServers && allServers.length > 0) {
@@ -76,13 +77,14 @@ function SignupFormPage() {
         email,
         username,
         password,
+        profilePictureFile
       }),
     );
 
     if (serverResponse) {
       setErrors(serverResponse);
       await dispatch(thunkFetchServers),
-      navigate(`/servers/1`)
+        navigate(`/servers/1`)
     }
   };
 
@@ -137,6 +139,17 @@ function SignupFormPage() {
             <p className="text-red-500">{errors.confirmPassword}</p>
           )}
         </div>
+        <label className="block text-white">
+          Upload Profile Picture File<br />
+          <input
+            type="file"
+            accept="image/*"
+            placeholder="Upload Profile Picture File"
+            onChange={(e) => setprofilePictureFile(e.target.files[0])}
+            className="form-input mt-1 block w-full text-white bg-gray-700"
+            required
+            /><br />
+        </label>
         <div className="mb-4">
           <button type="submit" className="bg-blue-500 text-white p-2 rounded-md w-full">
             Sign Up
