@@ -85,7 +85,7 @@ const Chat = ({currentChannel}) => {
                     <div className="flex items-center justify-between p-3 shadow bg-gray-800 text-white">{`${getCurrentChannelName()}`}</div>
                     <div className="flex-grow overflow-auto p-3 bg-gray-900">
                         {displayMessages?.map((message, ind) => (
-                            <div key={ind} className={`p-2 my-1 rounded-md text-white ${message.senderId === user.username ? 'bg-blue-600 ml-auto' : 'bg-gray-700'}`}>
+                            <div key={ind} className={`p-2 my-1 rounded-md text-white ${message.senderId === user.id ? 'bg-blue-600 ml-auto' : 'bg-gray-700'}`}>
                                 <div className="text-sm text-gray-400">{message.senderId}</div>
                                 <div>{message.content}</div>
                                 <div className="text-xs text-gray-500">{formatDateTime(message.created_at)}</div>
