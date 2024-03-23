@@ -6,9 +6,11 @@ import uuid
 BUCKET_NAME = os.environ.get("S3_BUCKET")
 S3_LOCATION = f"https://{BUCKET_NAME}.s3.amazonaws.com/"
 ALLOWED_EXTENSIONS = {"pdf", "png", "jpg", "jpeg", "gif"}
+AWS_REGION = 'us-west-1'
 
 s3 = boto3.client(
    "s3",
+   region_name=AWS_REGION, 
    aws_access_key_id=os.environ.get("S3_KEY"),
    aws_secret_access_key=os.environ.get("S3_SECRET")
 )
