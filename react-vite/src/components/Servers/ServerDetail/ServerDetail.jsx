@@ -34,7 +34,7 @@ const ServerDetail = () => {
     setCurrentChannel(id);
   };
 
-  console.log("This is the current Channel in Server Details", currentChannel);
+
   if (isLoading) return <>Loading...</>;
 
   return (

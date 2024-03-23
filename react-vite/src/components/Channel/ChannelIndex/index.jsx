@@ -19,7 +19,7 @@ const ChannelIndex = ({ num, selectedServer, currentChannel, setCurrentChannel})
   const handleChannelSelect = () => {
     setCurrentChannel(currentChannel);
   };
-  console.log("This is the current Channel in Channel Index", currentChannel);
+
 
   if (isLoading) return <>Loading...</>;
 

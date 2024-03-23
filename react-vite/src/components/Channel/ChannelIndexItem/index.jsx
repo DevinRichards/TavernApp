@@ -9,7 +9,7 @@ const ChannelIndexItem = (props) => {
   const handleChannelSelect = () => {
     setCurrentChannel(id);
   };
-  console.log("This is the current Channel in channel index Item",currentChannel)
+
 
 
   return (

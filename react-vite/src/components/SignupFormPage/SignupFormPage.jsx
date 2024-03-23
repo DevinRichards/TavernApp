@@ -18,7 +18,7 @@ function SignupFormPage() {
 
   useEffect(() => {
     if (sessionUser) {
-      console.log("a session user exits")
+
       dispatch(thunkFetchServers)
       if (allServers && allServers.length > 0) {
         const firstServerId = allServers[0].id;
@@ -72,14 +72,13 @@ function SignupFormPage() {
       return setErrors(formErrors);
     }
 
-    const serverResponse = await dispatch(
-      thunkSignup({
-        email,
-        username,
-        password,
-        profilePictureFile
-      }),
-    );
+    const formData = new FormData();
+    formData.append("profilePictureFile", profilePictureFile);
+    formData.append("email", email)
+    formData.append("username", username)
+    formData.append("password", password)
+    console.log("This is formdata after appending everything", formData)
+    const serverResponse = await dispatch(thunkSignup(formData));
 
     if (serverResponse) {
       setErrors(serverResponse);
@@ -148,7 +147,7 @@ function SignupFormPage() {
             onChange={(e) => setprofilePictureFile(e.target.files[0])}
             className="form-input mt-1 block w-full text-white bg-gray-700"
             required
-            /><br />
+          /><br />
         </label>
         <div className="mb-4">
           <button type="submit" className="bg-blue-500 text-white p-2 rounded-md w-full">

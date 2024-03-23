@@ -14,11 +14,11 @@ const Chat = ({currentChannel}) => {
     const user = useSelector(state => state.session.user);
     const server = useSelector(state => state.server?.currentServer)
     const channel = useSelector(state => state.channel?.channels);
-    console.log("this is channel", channel)
+
 
     const dispatch = useDispatch();
 
-    console.log("this is currentChannel In Chat", currentChannel)
+
 
     useEffect(() => {
         // open socket connection

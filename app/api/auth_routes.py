@@ -32,7 +32,8 @@ def login():
         user = User.query.filter(User.email == form.data['email']).first()
         login_user(user)
         return user.to_dict()
-    return form.errors, 401
+    return {'errors': {'form_errors': form.errors, 'message': 'Unauthorized'}}, 401
+
 
 
 @auth_routes.route('/logout')
@@ -54,8 +55,16 @@ def sign_up():
     if form.validate_on_submit():
         data = form.data
 
-        profilePictureFile = data['profilePictureFile']
+        # Debugging: Check if the form data is correctly received
+        print("Received form data:", data)
+
+        profilePictureFile = form.profilePictureFile.data
+
         profilePictureFile.filename = get_unique_filename(profilePictureFile.filename)
+
+        # Debugging: Check the filename after modification
+        print("Modified filename:", profilePictureFile.filename)
+
         upload = upload_file_to_s3(profilePictureFile)
         print(upload)
 
@@ -63,20 +72,37 @@ def sign_up():
             return jsonify({"error": "S3 upload failed", "details": upload.get("error", "Unknown error")}), 500
 
         profilePictureFile_url = upload['url']
+
+        # Debugging: Check the URL after upload
+        print("Uploaded profile picture URL:", profilePictureFile_url)
+
+        # Create a new user object
         user = User(
             username=form.data['username'],
             email=form.data['email'],
             password=form.data['password'],
-            profilePictureFile = profilePictureFile_url
+            profilePictureFile=profilePictureFile_url
         )
 
-        print(user)
+        # Debugging: Check the user object before adding to the session
+        print("User object before adding to session:", user)
 
+        # Add the user object to the session and commit
         db.session.add(user)
         db.session.commit()
+
+        # Debugging: Check if user was successfully committed to the database
+        print("User object after commit:", user)
+
+        # Log in the user
         login_user(user)
+
+        # Return user data as JSON response
         return jsonify(user.to_dict())
+
+    # If form validation fails, return errors
     return form.errors, 401
+
 
 
 @auth_routes.route('/unauthorized')
