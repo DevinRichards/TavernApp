@@ -23,6 +23,7 @@ def create_message():
     content = data.get('msg')
     channelId = data.get('channelId')
     senderId = data.get('senderId')
+    profilePictureFile = data.get('profilePictureFile')
     threadId = data.get('threadId', None)
 
     if not content or not channelId or not senderId:
@@ -33,6 +34,7 @@ def create_message():
         channelId=channelId,
         senderId=senderId,
         threadId=threadId,
+        profilePictureFile = profilePictureFile,
         created_at=datetime.utcnow(),
         updated_at=datetime.utcnow()
     )
@@ -59,6 +61,8 @@ def update_message(message_id):
         message.senderId = data['senderId']
     if 'threadId' in data:
         message.threadId = data['threadId']
+    if 'profilePictureFile' in data:
+        message.profilePictureFile = data['profilePictureFile']
     message.updated_at = datetime.utcnow()
 
     db.session.commit()

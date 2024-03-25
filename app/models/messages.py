@@ -13,6 +13,7 @@ class Message(db.Model):
   channelId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('channels.id')), nullable=False)
   senderId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
   threadId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('threads.id')))
+  profilePictureFile = db.Column(db.String(255))
   created_at = db.Column(db.DateTime, default=datetime.utcnow)
   updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
 
@@ -27,6 +28,8 @@ class Message(db.Model):
         'content':self.content,
         'channelId':self.channelId,
         'senderId':self.senderId,
+        'threadId':self.threadId,
+        'profilePictureFile': self.profilePictureFile,
         'created_at': self.created_at,
         'updated_at': self.updated_at
     }

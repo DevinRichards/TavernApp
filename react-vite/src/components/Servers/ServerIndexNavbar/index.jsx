@@ -3,8 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ServerIndexItem from '../ServerIndexItem/index';
 import AddServerButton from '../AddServerButton/AddServerButton';
+import UserSettingModal from '../../Users/UserSettingModel';
 import { thunkLogout} from '../../../redux/session';
 import { thunkFetchServers } from '../../../redux/server';
+import UserSettingButton from '../../Users/UserSettingButton';
 
 const ServerIndex = ({ num }) => {
   const allServers = useSelector(state => state.server.servers) || [];
@@ -14,7 +16,7 @@ const ServerIndex = ({ num }) => {
   const ulRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
+
 
   useEffect(() => {
     setIsLoading(false);
@@ -38,14 +40,6 @@ const ServerIndex = ({ num }) => {
     dispatch(thunkFetchServers());
   }, [dispatch]);
 
-
-  const logout = async (e) => {
-    e.preventDefault();
-    await dispatch(thunkLogout());
-    navigate("/login");
-  };
-
-
   if (isLoading) return <p>Loading...</p>;
 
   if (sessionUser) {
@@ -60,7 +54,7 @@ const ServerIndex = ({ num }) => {
               <AddServerButton />
             </li>
             <li>
-              <button className="p- bg-red-500 text-white" onClick={logout}>Log Out</button>
+              <UserSettingButton/>
             </li>
           </ul>
         </div>

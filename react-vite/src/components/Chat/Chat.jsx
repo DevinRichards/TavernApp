@@ -5,16 +5,15 @@ import { loadMessages, sendMessage } from "../../redux/chat";
 import { thunkFetchChannelById } from "../../redux/channel";
 let socket;
 
-const Chat = ({currentChannel}) => {
+const Chat = ({ currentChannel }) => {
     const [chatInput, setChatInput] = useState("");
     const displayMessages = useSelector(state =>
         state.messages?.messages.filter(message => message.channelId === currentChannel)
-      );
+    );
 
     const user = useSelector(state => state.session.user);
     const server = useSelector(state => state.server?.currentServer)
     const channel = useSelector(state => state.channel?.channels);
-
 
     const dispatch = useDispatch();
 
@@ -53,6 +52,7 @@ const Chat = ({currentChannel}) => {
         const messageData = {
             msg: chatInput,
             senderId: user.id,
+            profilePictureFile: user.profilePictureFile,
             channelId: currentChannel
         };
         // Dispatch action to send message to server
@@ -86,7 +86,10 @@ const Chat = ({currentChannel}) => {
                     <div className="flex-grow overflow-auto p-3 bg-gray-900">
                         {displayMessages?.map((message, ind) => (
                             <div key={ind} className={`p-2 my-1 rounded-md text-white ${message.senderId === user.id ? 'bg-blue-600 ml-auto' : 'bg-gray-700'}`}>
-                                <div className="text-sm text-gray-400">{message.senderId}</div>
+                                <div className="flex items-center">
+                                    <img src={message.profilePictureFile} alt="Profile" className="w-8 h-8 rounded-full mr-2" />
+                                    <div className="text-sm text-gray-400">{message.senderId}</div>
+                                </div>
                                 <div>{message.content}</div>
                                 <div className="text-xs text-gray-500">{formatDateTime(message.created_at)}</div>
                             </div>

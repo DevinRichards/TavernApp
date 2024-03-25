@@ -79,6 +79,7 @@ def upgrade():
     sa.Column('channelId', sa.Integer(), nullable=False),
     sa.Column('senderId', sa.Integer(), nullable=False),
     sa.Column('threadId', sa.Integer(), nullable=True),
+    sa.Column('profilePictureFile', sa.String(length=255)),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['channelId'], ['channels.id'], ),

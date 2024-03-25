@@ -13,7 +13,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
-    profilePictureFile = db.Column(db.String(255), nullable=False, default='/home/devinmrichards/TavernApp/discord profile picture.png')
+    profilePictureFile = db.Column(db.String(255), nullable=False, default='https://tavernappbucket.s3.amazonaws.com/d8adef1b30d7400cbe13ea1ce7d15d28.png')
     hashed_password = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
@@ -43,7 +43,7 @@ class User(db.Model, UserMixin):
             'id': self.id,
             'username': self.username,
             'email': self.email,
-            'profilePictureUrl':self.profilePictureFile,
+            'profilePictureFile': self.profilePictureFile,
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }
