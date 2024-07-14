@@ -9,9 +9,9 @@ from sqlalchemy import pool
 from alembic import context
 
 import os
+
 environment = os.getenv("FLASK_ENV")
 SCHEMA = os.environ.get("SCHEMA")
-
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -24,8 +24,6 @@ logger = logging.getLogger('alembic.env')
 
 # add your model's MetaData object here
 # for 'autogenerate' support
-# from myapp import mymodel
-# target_metadata = mymodel.Base.metadata
 from flask import current_app
 config.set_main_option(
     'sqlalchemy.url',
@@ -90,15 +88,18 @@ def run_migrations_online():
             process_revision_directives=process_revision_directives,
             **current_app.extensions['migrate'].configure_args
         )
-        # Create a schema (only in production)
+        
+        # Only perform these actions in production (PostgreSQL)
         if environment == "production":
+            # Create schema if not exists
             connection.execute(f"CREATE SCHEMA IF NOT EXISTS {SCHEMA}")
+            # Set search path to your schema
+            context.execute(f"SET search_path TO {SCHEMA}")
 
-        # Set search path to your schema (only in production)
+        # Run migrations
         with context.begin_transaction():
-            if environment == "production":
-                context.execute(f"SET search_path TO {SCHEMA}")
             context.run_migrations()
+
 
 if context.is_offline_mode():
     run_migrations_offline()
