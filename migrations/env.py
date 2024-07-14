@@ -3,15 +3,10 @@ from __future__ import with_statement
 import logging
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
-
 from alembic import context
+from sqlalchemy import engine_from_config, pool
 
 import os
-
-environment = os.getenv("FLASK_ENV")
-SCHEMA = os.environ.get("SCHEMA")
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -22,7 +17,7 @@ config = context.config
 fileConfig(config.config_file_name)
 logger = logging.getLogger('alembic.env')
 
-# add your model's MetaData object here
+# Add your model's MetaData object here
 # for 'autogenerate' support
 from flask import current_app
 config.set_main_option(
@@ -41,7 +36,7 @@ def run_migrations_offline():
 
     This configures the context with just a URL
     and not an Engine, though an Engine is acceptable
-    here as well.  By skipping the Engine creation
+    here as well. By skipping the Engine creation
     we don't even need a DBAPI to be available.
 
     Calls to context.execute() here emit the given string to the
@@ -60,7 +55,7 @@ def run_migrations_offline():
 def run_migrations_online():
     """Run migrations in 'online' mode.
 
-    In this scenario we need to create an Engine
+    In this scenario, we need to create an Engine
     and associate a connection with the context.
 
     """
@@ -88,17 +83,12 @@ def run_migrations_online():
             process_revision_directives=process_revision_directives,
             **current_app.extensions['migrate'].configure_args
         )
-        
-        # Only perform these actions in production (PostgreSQL)
-        if environment == "production":
-            # Create schema if not exists
-            connection.execute(f"CREATE SCHEMA IF NOT EXISTS {SCHEMA}")
-            # Set search path to your schema
-            context.execute(f"SET search_path TO {SCHEMA}")
 
-        # Run migrations
-        with context.begin_transaction():
-            context.run_migrations()
+        # Comment out the schema creation since SQLite does not support it
+        # with context.begin_transaction():
+        #     context.execute(f"CREATE SCHEMA IF NOT EXISTS {SCHEMA}")
+
+        context.run_migrations()
 
 
 if context.is_offline_mode():
