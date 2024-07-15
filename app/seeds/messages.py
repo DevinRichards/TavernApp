@@ -50,7 +50,7 @@ def seed_messages():
 # it will reset the primary keys for you as well.
 def undo_messages():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.channels RESTART IDENTITY CASCADE;")
+        db.session.execute(f"DELETE FROM {SCHEMA}.channels RESTART IDENTITY CASCADE;")
     else:
         db.session.execute(text("DELETE FROM channels"))
 
