@@ -30,9 +30,9 @@ const ServerDetail = () => {
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
   };
-  const handleChannelSelect = () => {
-    setCurrentChannel(id);
-  };
+  // const handleChannelSelect = () => {
+  //   setCurrentChannel(id);
+  // };
 
   console.log("This is the current Channel in Server Details", currentChannel);
   if (isLoading) return <>Loading...</>;
