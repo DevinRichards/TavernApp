@@ -25,4 +25,4 @@ flask-socketio==5.3.3
 eventlet==0.33.1
 boto3==1.34.143
 dnspython==2.2.1
-
+psycopg2==2.9.3
