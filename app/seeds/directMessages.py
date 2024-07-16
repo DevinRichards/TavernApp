@@ -49,7 +49,7 @@ def seed_direct_messages():
 # it will reset the primary keys for you as well.
 def undo_direct_messages():
     if environment == "production":
-        db.session.execute(f"TRUNCATE TABLE {SCHEMA}.direct_messages RESTART IDENTITY CASCADE;")
+        db.session.execute(f"RESTART IDENTITY {SCHEMA}.direct_messages RESTART IDENTITY CASCADE;")
     else:
         db.session.execute(text("DELETE FROM direct_messages"))
 

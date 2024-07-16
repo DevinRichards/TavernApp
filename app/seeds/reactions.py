@@ -51,7 +51,7 @@ def seed_reactions():
 # it will reset the primary keys for you as well.
 def undo_reactions():
     if environment == "production":
-        db.session.execute(f"DELETE FROM {SCHEMA}.reactions RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE TABLE {SCHEMA}.reactions RESTART IDENTITY CASCADE;")
     else:
         db.session.execute(text("DELETE FROM reactions"))
 

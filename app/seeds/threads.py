@@ -49,7 +49,7 @@ def seed_threads():
 # it will reset the primary keys for you as well.
 def undo_threads():
     if environment == "production":
-        db.session.execute(f"DELETE FROM {SCHEMA}.threads RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE TABLE {SCHEMA}.threads RESTART IDENTITY CASCADE;")
     else:
         db.session.execute(text("DELETE FROM threads"))
 

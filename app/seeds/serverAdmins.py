@@ -43,7 +43,7 @@ def seed_server_admins():
 # it will reset the primary keys for you as well.
 def undo_server_admins():
     if environment == "production":
-        db.session.execute(f"DELETE FROM {SCHEMA}.server_admins RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE TABLE {SCHEMA}.server_admins RESTART IDENTITY CASCADE;")
     else:
         db.session.execute(text("DELETE FROM server_admins"))
 
