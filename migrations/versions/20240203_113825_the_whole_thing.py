@@ -7,6 +7,11 @@ Create Date: 2024-02-03 11:38:25.423307
 """
 from alembic import op
 import sqlalchemy as sa
+import os
+
+
+environment = os.getenv("FLASK_ENV")
+SCHEMA = os.environ.get("SCHEMA")
 
 
 # revision identifiers, used by Alembic.
@@ -30,6 +35,10 @@ def upgrade():
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
+
+        
     op.create_table('servers',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('profilePictureUrl', sa.String(length=255)),
@@ -40,6 +49,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['ownerId'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE servers SET SCHEMA {SCHEMA};")
+
+
     op.create_table('server_admins',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('serverId', sa.Integer(), nullable=False),
@@ -50,6 +63,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['userId'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE server_admin SET SCHEMA {SCHEMA};")
+
+
     op.create_table('channels',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=40), nullable=False),
@@ -60,6 +77,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['serverId'], ['servers.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE channels SET SCHEMA {SCHEMA};")
+
+
     op.create_table('threads',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('content', sa.String(length=255), nullable=False),
@@ -73,6 +94,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['serverId'], ['servers.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE threads SET SCHEMA {SCHEMA};")
+
+
     op.create_table('messages',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('content', sa.String(length=2550), nullable=False),
@@ -86,6 +111,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['threadId'], ['threads.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE messages SET SCHEMA {SCHEMA};")
+
+
     op.create_table('reactions',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('emoji', sa.String(length=255), nullable=False),
@@ -97,6 +126,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['userId'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE reactions SET SCHEMA {SCHEMA};")
+
+
     op.create_table('direct_messages',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('content', sa.String(length=255), nullable=False),
@@ -108,6 +141,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['senderId'], ['users.id'], name='fk_direct_messages_senderId_users'),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE direct_messages SET SCHEMA {SCHEMA};")
+
+
     # ### end Alembic commands ###
 
 
