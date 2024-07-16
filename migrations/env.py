@@ -8,6 +8,9 @@ from sqlalchemy import engine_from_config, pool
 
 import os
 
+environment = os.getenv("FLASK_ENV")
+SCHEMA = os.environ.get("SCHEMA")
+
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
@@ -85,8 +88,8 @@ def run_migrations_online():
         )
 
         # Comment out the schema creation since SQLite does not support it
-        # with context.begin_transaction():
-        #     context.execute(f"CREATE SCHEMA IF NOT EXISTS {SCHEMA}")
+        with context.begin_transaction():
+            context.execute(f"CREATE SCHEMA IF NOT EXISTS {SCHEMA}")
 
         context.run_migrations()
 
