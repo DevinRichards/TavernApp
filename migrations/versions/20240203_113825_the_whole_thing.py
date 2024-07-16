@@ -64,7 +64,7 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
     if environment == "production":
-        op.execute(f"ALTER TABLE server_admin SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE server_admins SET SCHEMA {SCHEMA};")
 
 
     op.create_table('channels',
